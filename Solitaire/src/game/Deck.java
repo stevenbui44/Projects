@@ -1,6 +1,8 @@
 package game;
 import java.util.Random;
 
+import structures.ArrayBasedQueue;
+
 /**
  * Ight steven this is a deck which you're gonna need in order to shuffle
  */
@@ -62,10 +64,17 @@ public class Deck {
         return rtn;
     }
 
+    
     public void shuffle() {
+    	Random random = new Random();
+    	shuffle(random.nextInt());
+    }
+    
+    
+    public void shuffle(int seed) {
         Card[][] tempDeck = new Card[4][13];
 
-        Random random = new Random();
+        Random random = new Random(seed);
 
         // puts all of the cards in the deck into one long queue
         ArrayBasedQueue<Card> cardDeck = new ArrayBasedQueue<Card>();

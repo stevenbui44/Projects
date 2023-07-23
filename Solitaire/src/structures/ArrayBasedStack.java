@@ -1,4 +1,4 @@
-package game;
+package structures;
 import java.util.EmptyStackException;
 
 /**

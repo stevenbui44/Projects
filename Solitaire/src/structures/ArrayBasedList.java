@@ -1,4 +1,4 @@
-package game;
+package structures;
 import java.util.Arrays;
 
 /**
@@ -46,6 +46,15 @@ public class ArrayBasedList<E> {
         size = 0;
     }
 
+    
+    public void addFirst(E element) {
+        add(0, element);
+    }
+
+    public void addLast(E element) {
+        add(size(), element);
+    }
+    
 	/**
 	 * This adds an element at a specific index
 	 */
@@ -149,6 +158,26 @@ public class ArrayBasedList<E> {
         if (index < 0 || index >= size()) {
             throw new IndexOutOfBoundsException("Index is invalid: " + index + " (size=" + size() + ")");
         }
+    }
+    
+    public E first() {
+        return get(0);
+    }
+
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
+    public E last() {
+        return get(size() - 1);
+    }
+
+    public E removeFirst() {
+        return remove(0);
+    }
+
+    public E removeLast() {
+        return remove(size() - 1);
     }
     
 }

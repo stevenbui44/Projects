@@ -1,6 +1,8 @@
 package game;
 import java.util.Scanner;
 
+import structures.ArrayBasedStack;
+
 /**
  * Okay steven so this is the main file where you run the whole thing
  * 
@@ -36,7 +38,7 @@ public class Solitaire {
 
 
         Deck deck = new Deck();
-        deck.shuffle();
+        deck.shuffle(1);
         System.out.println(deck.toString());
 
         // we should automatically start the program with the piles being set up, the stock being full

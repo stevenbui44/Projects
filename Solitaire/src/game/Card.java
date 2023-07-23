@@ -1,4 +1,4 @@
-package src;
+package game;
 /**
  * Okay steven so this is the file for a Card object
  * 

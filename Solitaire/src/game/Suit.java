@@ -1,4 +1,5 @@
-package src;
+package game;
+
 /**
  * Ight steven this is a suit which is basically the 13 cards of the same face
  */

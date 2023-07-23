@@ -1,4 +1,4 @@
-package src;
+package game;
 import java.util.Scanner;
 
 /**
@@ -8,6 +8,8 @@ import java.util.Scanner;
  * Run:         java Solitaire
  * 
  * Compile:     javac *.java
+ * 
+ * Terminal:	cd git/Projects/Solitaire/src/game
  * 
  */
 

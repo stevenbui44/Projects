@@ -1,4 +1,8 @@
 package game;
+
+import org.fusesource.jansi.Ansi;
+import org.fusesource.jansi.AnsiConsole;
+
 /**
  * Okay steven so this is the file for a Card object
  * 
@@ -55,10 +59,9 @@ public class Card {
     }
 
     public String toString() {
-        // if (value == null || face == null) {
-        //     return "null";
-        // }
-        
+    	
+    	
+    	// CHUNK ONE: Manual escape sequences
         String rtn = "";
         if (color) {
             rtn = rtn + "\u001B[31m";
@@ -69,6 +72,29 @@ public class Card {
         }
 
         return rtn;
+    	
+    	
+        // CHUNK TWO: ANSI
+//    	AnsiConsole.systemInstall();
+//
+//        String rtn = "";
+//        if (color) {
+//            rtn = rtn + Ansi.ansi().fgRed().a(value + " " + face).reset();
+//        } else {
+//            rtn = rtn + value + " " + face;
+//        }
+//
+//        AnsiConsole.systemUninstall();
+//        return rtn;
+    	
+    	
+    	// CHUNK THREE: No color
+//    	String rtn = "";
+//        rtn = rtn + value + " " + face;
+//        return rtn;
+        
+        
+    	
 
     }
 

@@ -50,6 +50,12 @@ public class Deck {
                 else {
                     rtn = rtn + deck[i][j].toString() + "\t";
                 }
+                
+                // TODO: remove this after you are done! this is just here for formatting since ANSI messes up
+                if (deck[i][j].getColor()) {
+                	rtn = rtn + "\t";
+                }
+                
             }
             rtn = rtn + "\n";
         }

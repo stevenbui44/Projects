@@ -12,7 +12,9 @@ public class Suit {
     public Suit(String face) {
         suit = new Card[13];
 
-        for (int i = 1; i <= 10; i++) {
+        suit[0] = new Card("A", face);
+        
+        for (int i = 2; i <= 10; i++) {
             suit[i - 1] = new Card("" + i, face);
         }
         

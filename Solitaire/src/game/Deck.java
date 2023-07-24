@@ -51,13 +51,13 @@ public class Deck {
                 }
                 else {
                     rtn = rtn + deck[i][j].toString() + "\t";
+                    
+                    // TODO: remove this after you are done! this is just here for formatting since ANSI messes up
+                    if (deck[i][j].getColor()) {
+                    	rtn = rtn + "\t";
+                    }
                 }
-                
-                // TODO: remove this after you are done! this is just here for formatting since ANSI messes up
-                if (deck[i][j].getColor()) {
-                	rtn = rtn + "\t";
-                }
-                
+
             }
             rtn = rtn + "\n";
         }
@@ -132,6 +132,21 @@ public class Deck {
         }
         size--;
         return null;
+    }
+    
+    public boolean contains(Card card) {
+    	Deck tempDeck = new Deck();
+    	
+    	for (int i = 0; i < 4; i++) {
+    		for (int j = 0; j < 13; j++) {
+    			Card tempCard = tempDeck.removeCard();
+    			if (tempCard.getFace().equals(card.getFace()) && tempCard.getValue().equals(card.getValue())) {
+    				return true;
+    			}
+    		}
+    	}
+    	
+    	return false;
     }
     
 }

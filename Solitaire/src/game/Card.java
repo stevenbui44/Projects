@@ -17,7 +17,7 @@ public class Card {
     /** This is the NUMBER */
     private String value;
 
-    /** This is the PICTURE */
+    /** This is the PICTURE, either H D C S */
     private String face;
 
     /** True = RED color */
@@ -26,9 +26,9 @@ public class Card {
     /** 
      * This is the constructor
      */
-    public Card(String value, String i) {
+    public Card(String value, String face) {
         setValue(value);
-        setFace(i);
+        setFace(face);
     }
 
     public String getValue() {
@@ -107,6 +107,9 @@ public class Card {
         }
         else if (getValue().equals("J")) {
             return "11";
+        }
+        else if (getValue().equals("A")) {
+        	return "1";
         }
         return getValue();
     }

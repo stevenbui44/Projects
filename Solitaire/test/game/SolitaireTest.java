@@ -9,7 +9,9 @@ import org.junit.jupiter.api.Test;
 
 import structures.ArrayBasedStack;
 
-class SolitaireTest {
+// TODO: this is just testing the auto play feature, as an update you should add a manual feature where you choose what stack the card goes in
+
+public class SolitaireTest {
 	
 	/*
 	 	2-H		4-D		A C		5 C		3-D		4 S		Q C		3-H		8 S		4-H		J C		10 C	8 C	
@@ -462,10 +464,34 @@ class SolitaireTest {
 	@Test
 	public void testMovePileToFoundation() {
 		
+		// moving pile to foundation when there are no cards in pile that can go in foundation
+		
+		// moving pile to foundation when there are cards in pile that can go in foundation when foundation is empty
+		
+		// moving pile to foundation when there are cards in pile that can go in foundation when foundation is not empty
+		
+		// moving pile to foundation when there is only one card in pile, so you have to get a card from closedPile
+		
+		// moving a pile to foundation when there are multiple cards in pile, so you don't have to change closedPile
+		
+		
+		
 	}
+	
+	
+	
+	
 	
 	@Test
 	public void testMoveFoundationToPile() {
+		
+		// moving foundation to pile when foundation is empty
+		
+		// moving foundation to pile when no cards can go from foundation to pile
+		
+		// moving foundation to pile when a card can go from foundation to pile
+		
+		// moving foundation to pile when a King card can go from foundation to an empty pile
 		
 	}
 

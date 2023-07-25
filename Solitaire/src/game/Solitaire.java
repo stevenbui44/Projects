@@ -17,6 +17,13 @@ import structures.ArrayBasedStack;
  * 
  */
 
+/*
+ * IDEAS FOR UPDATES
+ * 1. you can choose a manual mode instead of auto mode, where you choose which stack a card goes to
+ * 2. points system, figure that out
+ * 3. 3 card mode instead of 1 card mode, way harder to implement
+ */
+
 public class Solitaire {
 
     /** 
@@ -166,205 +173,6 @@ public class Solitaire {
         stackMap.put("closedPile7", closedPile7);
     }
     
-//    public static void main(String[] args) {
-//    	new Solitaire();
-//    	
-//        /*  
-//            TODO: work on stock going to waste
-//            TODO: work on waste history (stacks and queues probably)
-//            TODO: work on piles going to foundation
-//            TODO: work on formatting the piles
-//            TODO: it's A not 1
-//
-//            TODO: give OPTIONS instead of just outputting everything below. like say the user has
-//                  to type in "stock to waste" to do one option and then "quit" to quit
-//        */
-//
-////        Scanner scanner = new Scanner(System.in);
-////        String input = scanner.nextLine();
-////
-////        ArrayBasedStack<Card> tempStock = new ArrayBasedStack<Card>();
-////        ArrayBasedStack<Card> tempWaste = new ArrayBasedStack<Card>();
-////        ArrayBasedStack<Card> tempPile1 = new ArrayBasedStack<Card>();
-////        ArrayBasedStack<Card> tempPile2 = new ArrayBasedStack<Card>();
-////        ArrayBasedStack<Card> tempPile3 = new ArrayBasedStack<Card>();
-////        ArrayBasedStack<Card> tempPile4 = new ArrayBasedStack<Card>();
-////        ArrayBasedStack<Card> tempPile5 = new ArrayBasedStack<Card>();
-////        ArrayBasedStack<Card> tempPile6 = new ArrayBasedStack<Card>();
-////        ArrayBasedStack<Card> tempPile7 = new ArrayBasedStack<Card>();
-////
-////        // CHUNK THREE: testing stock to waste
-////
-////        while (!input.equals("quit")) {
-////            if (input.equals("1") || input.equals("stock to waste")) {
-////                moveStockToWaste();
-////
-////                System.out.println("Stock:");
-////                tempStock = new ArrayBasedStack<Card>();
-////                while (!stock.isEmpty()) {
-////                    tempStock.push(stock.pop());
-////                }
-////                while (!tempStock.isEmpty()) {
-////                    stock.push(tempStock.pop());
-////                    System.out.print(stock.top() + "\t");
-////                }
-////                System.out.println();
-////
-////                System.out.println("Waste:");
-////                tempWaste = new ArrayBasedStack<Card>();
-////                while (!waste.isEmpty()) {
-////                    tempWaste.push(waste.pop());
-////                }
-////                while (!tempWaste.isEmpty()) {
-////                    waste.push(tempWaste.pop());
-////                    System.out.print(waste.top() + "\t");
-////                }
-////                System.out.println("\n");
-////
-////                input = scanner.nextLine();
-////            }
-////            else if (input.equals("2") || input.equals("waste to stock")) {
-////                moveWasteToStock();
-////
-////                System.out.println("Stock:");
-////                tempStock = new ArrayBasedStack<Card>();
-////                while (!stock.isEmpty()) {
-////                    tempStock.push(stock.pop());
-////                }
-////                while (!tempStock.isEmpty()) {
-////                    stock.push(tempStock.pop());
-////                    System.out.print(stock.top() + "\t");
-////                }
-////                System.out.println();
-////
-////                System.out.println("Waste:");
-////                tempWaste = new ArrayBasedStack<Card>();
-////                while (!waste.isEmpty()) {
-////                    tempWaste.push(waste.pop());
-////                }
-////                while (!tempWaste.isEmpty()) {
-////                    waste.push(tempWaste.pop());
-////                    System.out.print(waste.top() + "\t");
-////                }
-////                System.out.println("\n");
-////
-////                input = scanner.nextLine();
-////            }
-////            else if (input.equals("piles")) {
-////                System.out.print("Pile 1:\t");
-////                tempPile1 = new ArrayBasedStack<Card>();
-////                while (!openPile1.isEmpty()) {
-////                    tempPile1.push(openPile1.pop());
-////                }
-////                while (!tempPile1.isEmpty()) {
-////                    openPile1.push(tempPile1.pop());
-////                    System.out.print(openPile1.top() + "\t");
-////                }
-////                System.out.println();
-////
-////                System.out.print("Pile 2:\t");
-////                tempPile2 = new ArrayBasedStack<Card>();
-////                while (!openPile2.isEmpty()) {
-////                    tempPile2.push(openPile2.pop());
-////                }
-////                while (!tempPile2.isEmpty()) {
-////                    openPile2.push(tempPile2.pop());
-////                    System.out.print(openPile2.top() + "\t");
-////                }
-////                System.out.println();
-////
-////                System.out.print("Pile 3:\t");
-////                tempPile3 = new ArrayBasedStack<Card>();
-////                while (!openPile3.isEmpty()) {
-////                    tempPile3.push(openPile3.pop());
-////                }
-////                while (!tempPile3.isEmpty()) {
-////                    openPile3.push(tempPile3.pop());
-////                    System.out.print(openPile3.top() + "\t");
-////                }
-////                System.out.println();
-////
-////                System.out.print("Pile 4:\t");
-////                tempPile4 = new ArrayBasedStack<Card>();
-////                while (!openPile4.isEmpty()) {
-////                    tempPile4.push(openPile4.pop());
-////                }
-////                while (!tempPile4.isEmpty()) {
-////                    openPile4.push(tempPile4.pop());
-////                    System.out.print(openPile4.top() + "\t");
-////                }
-////                System.out.println();
-////
-////                System.out.print("Pile 5:\t");
-////                tempPile5 = new ArrayBasedStack<Card>();
-////                while (!openPile5.isEmpty()) {
-////                    tempPile5.push(openPile5.pop());
-////                }
-////                while (!tempPile5.isEmpty()) {
-////                    openPile5.push(tempPile5.pop());
-////                    System.out.print(openPile5.top() + "\t");
-////                }
-////                System.out.println();
-////
-////                System.out.print("Pile 6:\t");
-////                tempPile6 = new ArrayBasedStack<Card>();
-////                while (!openPile6.isEmpty()) {
-////                    tempPile6.push(openPile6.pop());
-////                }
-////                while (!tempPile6.isEmpty()) {
-////                    openPile6.push(tempPile6.pop());
-////                    System.out.print(openPile6.top() + "\t");
-////                }
-////                System.out.println();
-////
-////                System.out.print("Pile 7:\t");
-////                tempPile7 = new ArrayBasedStack<Card>();
-////                while (!openPile7.isEmpty()) {
-////                    tempPile7.push(openPile7.pop());
-////                }
-////                while (!tempPile7.isEmpty()) {
-////                    openPile7.push(tempPile7.pop());
-////                    System.out.print(openPile7.top() + "\t");
-////                }
-////                System.out.println("\n");
-////
-////                input = scanner.nextLine();
-////            }
-////            else if (input.equals("3") || input.equals("waste to pile")) {
-////                moveWasteToPile();
-////
-////                System.out.println("Stock:");
-////                tempStock = new ArrayBasedStack<Card>();
-////                while (!stock.isEmpty()) {
-////                    tempStock.push(stock.pop());
-////                }
-////                while (!tempStock.isEmpty()) {
-////                    stock.push(tempStock.pop());
-////                    System.out.print(stock.top() + "\t");
-////                }
-////                System.out.println();
-////
-////                System.out.println("Waste:");
-////                tempWaste = new ArrayBasedStack<Card>();
-////                while (!waste.isEmpty()) {
-////                    tempWaste.push(waste.pop());
-////                }
-////                while (!tempWaste.isEmpty()) {
-////                    waste.push(tempWaste.pop());
-////                    System.out.print(waste.top() + "\t");
-////                }
-////                System.out.println("\n");
-////
-////                input = scanner.nextLine();
-////            }
-////            else {
-////                input = scanner.nextLine();
-////            }
-////        }
-//
-//
-//    }
-    
     public ArrayBasedStack<Card> getStack(String stack) {
     	return stackMap.get(stack);
     }
@@ -502,7 +310,16 @@ public class Solitaire {
     }
 
     public void movePileToFoundation() {
-        
+    	
+    	if (!openPile1.isEmpty() && openPile1.top().getFace().equals("H") && Integer.parseInt(openPile1.top().updateValue()) == Integer.parseInt(hearts.top().updateValue() + 1)) {
+    		hearts.push(openPile1.pop());
+    	}
+    	
+    	// TODO: maybe consider using an ArrayBasedList for piles and foundation and all that, or perhaps just an array
+    	// it probably makes sense to use an array
+    	
+    	// TODO: do something about if there is only 1 card in the openPile, remove a card from closedPile and add it to openPile
+    	// TODO: do 28 of these
     }
 
     public void moveFoundationToPile() {

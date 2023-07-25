@@ -456,19 +456,56 @@ public class Solitaire {
         
     }
 
-    public void moveWasteToFoundation(ArrayBasedStack<Card> a, ArrayBasedStack<Card> b) {
+    public void moveWasteToFoundation() {
+        
+    	if (waste.isEmpty()) {
+    		throw new IllegalStateException();
+    	}
+    	
+    	String tempWasteValue = waste.top().updateValue();
+    	
+        // if there are already cards in the foundation
+        if (!hearts.isEmpty() && Integer.parseInt(tempWasteValue) == (Integer.parseInt(hearts.top().updateValue()) + 1) && waste.top().getFace().equals("H")) {
+            hearts.push(waste.pop());
+        }
+        else if (!diamonds.isEmpty() && Integer.parseInt(tempWasteValue) == (Integer.parseInt(diamonds.top().updateValue()) + 1) && waste.top().getFace().equals("D")) {
+        	diamonds.push(waste.pop());
+        }
+        else if (!clubs.isEmpty() && Integer.parseInt(tempWasteValue) == (Integer.parseInt(clubs.top().updateValue()) + 1) && waste.top().getFace().equals("C")) {
+        	clubs.push(waste.pop());
+        }
+        else if (!spades.isEmpty() && Integer.parseInt(tempWasteValue) == (Integer.parseInt(spades.top().updateValue()) + 1) && waste.top().getFace().equals("S")) {
+        	spades.push(waste.pop());
+        }
+    	
+        // if there are no cards in foundation, only move Ace
+        else if (hearts.isEmpty() && Integer.parseInt(tempWasteValue) == 1 && waste.top().getFace().equals("H")) {
+        	hearts.push(waste.pop());
+        }
+        else if (diamonds.isEmpty() && Integer.parseInt(tempWasteValue) == 1 && waste.top().getFace().equals("D")) {
+        	diamonds.push(waste.pop());
+        }
+        else if (clubs.isEmpty() && Integer.parseInt(tempWasteValue) == 1 && waste.top().getFace().equals("C")) {
+        	clubs.push(waste.pop());
+        }
+        else if (spades.isEmpty() && Integer.parseInt(tempWasteValue) == 1 && waste.top().getFace().equals("S")) {
+        	spades.push(waste.pop());
+        }
+        else {
+        	throw new IllegalStateException();
+        }
         
     }
 
-    public void movePileToPile(ArrayBasedStack<Card> a, ArrayBasedStack<Card> b) {
+    public void movePileToPile() {
 
     }
 
-    public void movePileToFoundation(ArrayBasedStack<Card> a, ArrayBasedStack<Card> b) {
+    public void movePileToFoundation() {
         
     }
 
-    public void moveFoundationToPile(ArrayBasedStack<Card> a, ArrayBasedStack<Card> b) {
+    public void moveFoundationToPile() {
         
     }
 }

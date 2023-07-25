@@ -67,13 +67,19 @@ class SolitaireTest {
 	private void state() {
 		System.out.println("Stock: " + stackToString(game.getStack("stock")));
 		System.out.println("Waste: " + stackToString(game.getStack("waste")));
-		System.out.println("Pile1: " + stackToString(game.getStack("openPile1")));
-		System.out.println("Pile2: " + stackToString(game.getStack("openPile2")));
-		System.out.println("Pile3: " + stackToString(game.getStack("openPile3")));
-		System.out.println("Pile4: " + stackToString(game.getStack("openPile4")));
-		System.out.println("Pile5: " + stackToString(game.getStack("openPile5")));
-		System.out.println("Pile6: " + stackToString(game.getStack("openPile6")));
-		System.out.println("Pile7: " + stackToString(game.getStack("openPile7")) + "\n");
+		System.out.println("- - - - -");
+//		System.out.println("Pile1: " + stackToString(game.getStack("openPile1")));
+//		System.out.println("Pile2: " + stackToString(game.getStack("openPile2")));
+//		System.out.println("Pile3: " + stackToString(game.getStack("openPile3")));
+//		System.out.println("Pile4: " + stackToString(game.getStack("openPile4")));
+//		System.out.println("Pile5: " + stackToString(game.getStack("openPile5")));
+//		System.out.println("Pile6: " + stackToString(game.getStack("openPile6")));
+//		System.out.println("Pile7: " + stackToString(game.getStack("openPile7")));
+//		System.out.println("- - - - -");
+		System.out.println("Hearts:   " + stackToString(game.getStack("hearts")));
+		System.out.println("Diamonds: " + stackToString(game.getStack("diamonds")));
+		System.out.println("Clubs:    " + stackToString(game.getStack("clubs")));
+		System.out.println("Spades:   " + stackToString(game.getStack("spades")) + "\n");
 	}
 
 	@Test
@@ -340,6 +346,8 @@ class SolitaireTest {
 		
 		// try moving waste to pile when the pile is empty and waste is a king
 		
+		// TODO: not done
+		
 		
 		
 		
@@ -347,6 +355,102 @@ class SolitaireTest {
 	
 	@Test
 	public void testMoveWasteToFoundation() {
+		
+//		state();
+		
+		// try moving waste to foundation when waste is empty
+		assertEquals(24, game.getStack("stock").size());
+		assertEquals(0, game.getStack("waste").size());
+		assertEquals(0, game.getStack("hearts").size());
+		assertEquals(0, game.getStack("diamonds").size());
+		assertEquals(0, game.getStack("clubs").size());
+		assertEquals(0, game.getStack("spades").size());
+		
+		try {
+			game.moveWasteToFoundation();
+			fail();
+		}
+		catch (Exception e) {
+			assertTrue(e instanceof IllegalStateException);
+		}
+		
+		
+		
+		// try moving waste to foundation when the waste can't go into foundation
+		game.moveStockToWaste();
+//		state();
+		
+		assertEquals(23, game.getStack("stock").size());
+		assertEquals(1, game.getStack("waste").size());
+		assertEquals(0, game.getStack("hearts").size());
+		assertEquals(0, game.getStack("diamonds").size());
+		assertEquals(0, game.getStack("clubs").size());
+		assertEquals(0, game.getStack("spades").size());
+		
+		try {
+			game.moveWasteToFoundation();
+			fail();
+		}
+		catch (Exception e) {
+			assertTrue(e instanceof IllegalStateException);
+		}
+		
+		
+		
+		
+		// try moving waste to foundation when the waste can go into foundation and foundation is empty
+//		state();
+		for (int i = 0; i < 19; i++) {
+			game.moveStockToWaste();
+		}
+//		state();
+		
+		assertEquals(4, game.getStack("stock").size());
+		assertEquals(20, game.getStack("waste").size());
+		assertEquals(0, game.getStack("hearts").size());
+		assertEquals(0, game.getStack("diamonds").size());
+		assertEquals(0, game.getStack("clubs").size());
+		assertEquals(0, game.getStack("spades").size());
+		
+		game.moveWasteToFoundation();
+		
+		assertEquals(4, game.getStack("stock").size());
+		assertEquals(19, game.getStack("waste").size());
+		assertEquals(0, game.getStack("hearts").size());
+		assertEquals(1, game.getStack("diamonds").size());
+		assertEquals(0, game.getStack("clubs").size());
+		assertEquals(0, game.getStack("spades").size());
+		
+		assertEquals("A", game.getStack("diamonds").top().getValue());
+		assertEquals("D", game.getStack("diamonds").top().getFace());
+		
+		
+		
+		// try moving waste to foundation when the waste can go into foundation and foundation already has cards
+		for (int i = 0; i < 2; i++) {
+			game.moveStockToWaste();
+		}
+//		state();
+		
+		assertEquals(2, game.getStack("stock").size());
+		assertEquals(21, game.getStack("waste").size());
+		assertEquals(0, game.getStack("hearts").size());
+		assertEquals(1, game.getStack("diamonds").size());
+		assertEquals(0, game.getStack("clubs").size());
+		assertEquals(0, game.getStack("spades").size());
+		
+		game.moveWasteToFoundation();
+		
+		assertEquals(2, game.getStack("stock").size());
+		assertEquals(20, game.getStack("waste").size());
+		assertEquals(0, game.getStack("hearts").size());
+		assertEquals(2, game.getStack("diamonds").size());
+		assertEquals(0, game.getStack("clubs").size());
+		assertEquals(0, game.getStack("spades").size());
+		
+		assertEquals("2", game.getStack("diamonds").top().getValue());
+		assertEquals("D", game.getStack("diamonds").top().getFace());
+		
 		
 	}
 	

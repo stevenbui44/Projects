@@ -89,7 +89,35 @@ public class SolitaireTest {
 		return rtn.toString();
 	}
 	
-	private void state() {
+//	private void state() {
+//		System.out.println("Stock: " + stackToString(game.stock()));
+//		System.out.println("Waste: " + stackToString(game.waste()));
+//		System.out.println("- - - - -");
+//		System.out.println("Closed 1: " + stackToString(game.closedTableau()[0]));
+//		System.out.println("Closed 2: " + stackToString(game.closedTableau()[1]));
+//		System.out.println("Closed 3: " + stackToString(game.closedTableau()[2]));
+//		System.out.println("Closed 4: " + stackToString(game.closedTableau()[3]));
+//		System.out.println("Closed 5: " + stackToString(game.closedTableau()[4]));
+//		System.out.println("Closed 6: " + stackToString(game.closedTableau()[5]));
+//		System.out.println("Closed 7: " + stackToString(game.closedTableau()[6]));
+//		System.out.println("- - - - -");
+//		System.out.println("Open 1: " + stackToString(game.openTableau()[0]));
+//		System.out.println("Open 2: " + stackToString(game.openTableau()[1]));
+//		System.out.println("Open 3: " + stackToString(game.openTableau()[2]));
+//		System.out.println("Open 4: " + stackToString(game.openTableau()[3]));
+//		System.out.println("Open 5: " + stackToString(game.openTableau()[4]));
+//		System.out.println("Open 6: " + stackToString(game.openTableau()[5]));
+//		System.out.println("Open 7: " + stackToString(game.openTableau()[6]));
+//		System.out.println("- - - - -");
+//		System.out.println("Hearts:   " + stackToString(game.foundation()[0]));
+//		System.out.println("Diamonds: " + stackToString(game.foundation()[1]));
+//		System.out.println("Clubs:    " + stackToString(game.foundation()[2]));
+//		System.out.println("Spades:   " + stackToString(game.foundation()[3]) + "\n\n\n");
+//	}
+	
+	
+	
+	private void state(Solitaire game) {
 		System.out.println("Stock: " + stackToString(game.stock()));
 		System.out.println("Waste: " + stackToString(game.waste()));
 		System.out.println("- - - - -");
@@ -114,6 +142,8 @@ public class SolitaireTest {
 		System.out.println("Clubs:    " + stackToString(game.foundation()[2]));
 		System.out.println("Spades:   " + stackToString(game.foundation()[3]) + "\n\n\n");
 	}
+	
+	
 
 	@Test
 	public void testGetStack() {
@@ -489,128 +519,128 @@ public class SolitaireTest {
 		
 	}
 	
-	@Test
-	public void testMovePileToPile() {
-//		state();
-		
-		// moving a pile with one card to another pile, where pile A goes empty
-		assertEquals(24, game.stock().size());
-		assertEquals(0, game.waste().size());
-		
-		assertEquals(0, game.foundation()[0].size());
-		assertEquals(0, game.foundation()[1].size());
-		assertEquals(0, game.foundation()[2].size());
-		assertEquals(0, game.foundation()[3].size());
-		
-		assertEquals(1, game.openTableau()[0].size());
-		assertEquals(1, game.openTableau()[1].size());
-		assertEquals(1, game.openTableau()[2].size());
-		assertEquals(1, game.openTableau()[3].size());
-		assertEquals(1, game.openTableau()[4].size());
-		assertEquals(1, game.openTableau()[5].size());
-		assertEquals(1, game.openTableau()[6].size());
-		
-		assertNull(game.closedTableau()[0]);
-		assertEquals(1, game.closedTableau()[1].size());
-		assertEquals(2, game.closedTableau()[2].size());
-		assertEquals(3, game.closedTableau()[3].size());
-		assertEquals(4, game.closedTableau()[4].size());
-		assertEquals(5, game.closedTableau()[5].size());
-		assertEquals(6, game.closedTableau()[6].size());
-		
-		assertEquals("2-H   ", stackToString(game.openTableau()[0]));
-		assertEquals("3 S   ", stackToString(game.openTableau()[5]));
-		
-		game.movePileToPile();
-		
-		assertEquals(24, game.stock().size());
-		assertEquals(0, game.waste().size());
-		
-		assertEquals(0, game.foundation()[0].size());
-		assertEquals(0, game.foundation()[1].size());
-		assertEquals(0, game.foundation()[2].size());
-		assertEquals(0, game.foundation()[3].size());
-		
-		assertEquals(0, game.openTableau()[0].size());
-		assertEquals(1, game.openTableau()[1].size());
-		assertEquals(1, game.openTableau()[2].size());
-		assertEquals(1, game.openTableau()[3].size());
-		assertEquals(1, game.openTableau()[4].size());
-		assertEquals(2, game.openTableau()[5].size());
-		assertEquals(1, game.openTableau()[6].size());
-		
-		assertNull(game.closedTableau()[0]);
-		assertEquals(1, game.closedTableau()[1].size());
-		assertEquals(2, game.closedTableau()[2].size());
-		assertEquals(3, game.closedTableau()[3].size());
-		assertEquals(4, game.closedTableau()[4].size());
-		assertEquals(5, game.closedTableau()[5].size());
-		assertEquals(6, game.closedTableau()[6].size());
-		
-		assertEquals("empty", stackToString(game.openTableau()[0]));
-		assertEquals("3 S   2-H   ", stackToString(game.openTableau()[5]));
-		
-		
-		
-		// moving a king card to a pile with no cards
-//		state();
-		
-		assertEquals("empty", stackToString(game.openTableau()[0]));
-		assertEquals("K C   ", stackToString(game.openTableau()[6]));
-		assertEquals(0, game.openTableau()[0].size());
-		assertEquals(1, game.openTableau()[6].size());
-		assertNull(game.closedTableau()[0]);
-		assertEquals(6, game.closedTableau()[6].size());
-		assertEquals("7 C   8-H   2 C   6-H   J-D   6-D   ", stackToString(game.closedTableau()[6]));
-
-		game.movePileToPile();
-		
-		assertEquals("K C   ", stackToString(game.openTableau()[0]));
-		assertEquals("6-D   ", stackToString(game.openTableau()[6]));
-		assertEquals(1, game.openTableau()[0].size());
-		assertEquals(1, game.openTableau()[6].size());
-		assertNull(game.closedTableau()[0]);
-		assertEquals(5, game.closedTableau()[6].size());
-		assertEquals("7 C   8-H   2 C   6-H   J-D   ", stackToString(game.closedTableau()[6]));
-				
-		
-		
-		// moving a pile with one card to another pile, where pile A gets from closed pile
-//		state();
-		
-		assertEquals("A C   ", stackToString(game.openTableau()[1]));
-		assertEquals("3 S   2-H   ", stackToString(game.openTableau()[5]));
-		assertEquals(1, game.openTableau()[1].size());
-		assertEquals(2, game.openTableau()[5].size());
-		assertEquals(1, game.closedTableau()[1].size());
-		assertEquals(5, game.closedTableau()[5].size());
-		assertEquals("4-D   ", stackToString(game.closedTableau()[1]));
-		
-		game.movePileToPile();
-		
-		assertEquals("4-D   ", stackToString(game.openTableau()[1]));
-		assertEquals("3 S   2-H   A C   ", stackToString(game.openTableau()[5]));
-		assertEquals(1, game.openTableau()[1].size());
-		assertEquals(3, game.openTableau()[5].size());
-		assertEquals(0, game.closedTableau()[1].size());
-		assertEquals(5, game.closedTableau()[5].size());
-		assertEquals("empty", stackToString(game.closedTableau()[1]));
-		
-//		state();
-		
-		
-		// moving an entire pile with multiple cards to another pile
-		
-		// try to open pile 6 to open pile 2 (not 4, you want 2 to get the pile empty faster)
+//	@Test
+//	public void testMovePile() {
+////		state();
+//		
+//		// moving a pile with one card to another pile, where pile A goes empty
+//		assertEquals(24, game.stock().size());
+//		assertEquals(0, game.waste().size());
+//		
+//		assertEquals(0, game.foundation()[0].size());
+//		assertEquals(0, game.foundation()[1].size());
+//		assertEquals(0, game.foundation()[2].size());
+//		assertEquals(0, game.foundation()[3].size());
+//		
+//		assertEquals(1, game.openTableau()[0].size());
+//		assertEquals(1, game.openTableau()[1].size());
+//		assertEquals(1, game.openTableau()[2].size());
+//		assertEquals(1, game.openTableau()[3].size());
+//		assertEquals(1, game.openTableau()[4].size());
+//		assertEquals(1, game.openTableau()[5].size());
+//		assertEquals(1, game.openTableau()[6].size());
+//		
+//		assertNull(game.closedTableau()[0]);
+//		assertEquals(1, game.closedTableau()[1].size());
+//		assertEquals(2, game.closedTableau()[2].size());
+//		assertEquals(3, game.closedTableau()[3].size());
+//		assertEquals(4, game.closedTableau()[4].size());
+//		assertEquals(5, game.closedTableau()[5].size());
+//		assertEquals(6, game.closedTableau()[6].size());
+//		
+//		assertEquals("2-H   ", stackToString(game.openTableau()[0]));
+//		assertEquals("3 S   ", stackToString(game.openTableau()[5]));
+//		
 //		game.movePileToPile();
-
-
-		
-		
-		// TODO: maybe implement later
-		// moving middle of pile to another pile (you use this if you have to move a card to foundation)
-		
-	}
+//		
+//		assertEquals(24, game.stock().size());
+//		assertEquals(0, game.waste().size());
+//		
+//		assertEquals(0, game.foundation()[0].size());
+//		assertEquals(0, game.foundation()[1].size());
+//		assertEquals(0, game.foundation()[2].size());
+//		assertEquals(0, game.foundation()[3].size());
+//		
+//		assertEquals(0, game.openTableau()[0].size());
+//		assertEquals(1, game.openTableau()[1].size());
+//		assertEquals(1, game.openTableau()[2].size());
+//		assertEquals(1, game.openTableau()[3].size());
+//		assertEquals(1, game.openTableau()[4].size());
+//		assertEquals(2, game.openTableau()[5].size());
+//		assertEquals(1, game.openTableau()[6].size());
+//		
+//		assertNull(game.closedTableau()[0]);
+//		assertEquals(1, game.closedTableau()[1].size());
+//		assertEquals(2, game.closedTableau()[2].size());
+//		assertEquals(3, game.closedTableau()[3].size());
+//		assertEquals(4, game.closedTableau()[4].size());
+//		assertEquals(5, game.closedTableau()[5].size());
+//		assertEquals(6, game.closedTableau()[6].size());
+//		
+//		assertEquals("empty", stackToString(game.openTableau()[0]));
+//		assertEquals("3 S   2-H   ", stackToString(game.openTableau()[5]));
+//		
+//		
+//		
+//		// moving a king card to a pile with no cards
+////		state();
+//		
+//		assertEquals("empty", stackToString(game.openTableau()[0]));
+//		assertEquals("K C   ", stackToString(game.openTableau()[6]));
+//		assertEquals(0, game.openTableau()[0].size());
+//		assertEquals(1, game.openTableau()[6].size());
+//		assertNull(game.closedTableau()[0]);
+//		assertEquals(6, game.closedTableau()[6].size());
+//		assertEquals("7 C   8-H   2 C   6-H   J-D   6-D   ", stackToString(game.closedTableau()[6]));
+//
+//		game.movePileToPile();
+//		
+//		assertEquals("K C   ", stackToString(game.openTableau()[0]));
+//		assertEquals("6-D   ", stackToString(game.openTableau()[6]));
+//		assertEquals(1, game.openTableau()[0].size());
+//		assertEquals(1, game.openTableau()[6].size());
+//		assertNull(game.closedTableau()[0]);
+//		assertEquals(5, game.closedTableau()[6].size());
+//		assertEquals("7 C   8-H   2 C   6-H   J-D   ", stackToString(game.closedTableau()[6]));
+//				
+//		
+//		
+//		// moving a pile with one card to another pile, where pile A gets from closed pile
+////		state();
+//		
+//		assertEquals("A C   ", stackToString(game.openTableau()[1]));
+//		assertEquals("3 S   2-H   ", stackToString(game.openTableau()[5]));
+//		assertEquals(1, game.openTableau()[1].size());
+//		assertEquals(2, game.openTableau()[5].size());
+//		assertEquals(1, game.closedTableau()[1].size());
+//		assertEquals(5, game.closedTableau()[5].size());
+//		assertEquals("4-D   ", stackToString(game.closedTableau()[1]));
+//		
+//		game.movePileToPile();
+//		
+//		assertEquals("4-D   ", stackToString(game.openTableau()[1]));
+//		assertEquals("3 S   2-H   A C   ", stackToString(game.openTableau()[5]));
+//		assertEquals(1, game.openTableau()[1].size());
+//		assertEquals(3, game.openTableau()[5].size());
+//		assertEquals(0, game.closedTableau()[1].size());
+//		assertEquals(5, game.closedTableau()[5].size());
+//		assertEquals("empty", stackToString(game.closedTableau()[1]));
+//		
+////		state();
+//		
+//		
+//		// moving an entire pile with multiple cards to another pile
+//		
+//		// try to open pile 6 to open pile 2 (not 4, you want 2 to get the pile empty faster)
+////		game.movePileToPile();
+//
+//
+//		
+//		
+//		// TODO: maybe implement later
+//		// moving middle of pile to another pile (you use this if you have to move a card to foundation)
+//		
+//	}
 	
 	@Test
 	public void testMovePileToFoundation() {
@@ -792,27 +822,382 @@ public class SolitaireTest {
 //	
 //	
 //	
-//	@Test
-//	public void testMoveFoundationToPile() {
-//		
-//		// moving foundation to pile when foundation is empty
-//		
-//		// moving foundation to pile when no cards can go from foundation to pile
-//		
-//		// moving foundation to pile when a card can go from foundation to pile
-//		
-//		// moving foundation to pile when a King card can go from foundation to an empty pile
-//		
-//	}
+	@Test
+	public void testMoveFoundationToPile() {
+		
+		// moving foundation to pile when foundation is empty = exception
+//		state();
+		
+		assertEquals(24, game.stock().size());
+		assertEquals(0, game.waste().size());
+		
+		assertEquals(0, game.foundation()[0].size());
+		assertEquals(0, game.foundation()[1].size());
+		assertEquals(0, game.foundation()[2].size());
+		assertEquals(0, game.foundation()[3].size());
+		
+		assertEquals(1, game.openTableau()[0].size());
+		assertEquals(1, game.openTableau()[1].size());
+		assertEquals(1, game.openTableau()[2].size());
+		assertEquals(1, game.openTableau()[3].size());
+		assertEquals(1, game.openTableau()[4].size());
+		assertEquals(1, game.openTableau()[5].size());
+		assertEquals(1, game.openTableau()[6].size());
+		
+		assertNull(game.closedTableau()[0]);
+		assertEquals(1, game.closedTableau()[1].size());
+		assertEquals(2, game.closedTableau()[2].size());
+		assertEquals(3, game.closedTableau()[3].size());
+		assertEquals(4, game.closedTableau()[4].size());
+		assertEquals(5, game.closedTableau()[5].size());
+		assertEquals(6, game.closedTableau()[6].size());
+		
+		try {
+			game.moveFoundationToPile();
+			fail();
+		}
+		catch (Exception e) {
+			assertTrue(e instanceof IllegalStateException);
+		}
+		
+		
+		
+		
+		// moving foundation to pile when no cards can go from foundation to pile
+		
+		// moving some Ace to the foundation
+		game.movePileToFoundation();
+		
+		// putting 2-H on top of 3 S
+		game.movePileToPile();
+		
+		// putting A S on top of 2-H, now Ace in foundation cannot go anywhere
+		game.movePileToPile();
+		
+//		state();
+		assertEquals(24, game.stock().size());
+		assertEquals(0, game.waste().size());
+		
+		assertEquals(0, game.foundation()[0].size());
+		assertEquals(0, game.foundation()[1].size());
+		assertEquals(1, game.foundation()[2].size());
+		assertEquals(0, game.foundation()[3].size());
+		
+		assertEquals(0, game.openTableau()[0].size());
+		assertEquals(1, game.openTableau()[1].size());
+		assertEquals(1, game.openTableau()[2].size());
+		assertEquals(1, game.openTableau()[3].size());
+		assertEquals(1, game.openTableau()[4].size());
+		assertEquals(3, game.openTableau()[5].size());
+		assertEquals(1, game.openTableau()[6].size());
+		
+		assertNull(game.closedTableau()[0]);
+		assertEquals(0, game.closedTableau()[1].size());
+		assertEquals(2, game.closedTableau()[2].size());
+		assertEquals(3, game.closedTableau()[3].size());
+		assertEquals(3, game.closedTableau()[4].size());
+		assertEquals(5, game.closedTableau()[5].size());
+		assertEquals(6, game.closedTableau()[6].size());
+		
+		try {
+			game.moveFoundationToPile();
+			fail();
+		}
+		catch (Exception e) {
+			assertTrue(e instanceof IllegalStateException);
+		}
+		
+		
+		
+		
+		// moving foundation to pile when a card can go from foundation to pile
+//		state();
+		
+		assertEquals("empty", stackToString(game.foundation()[0]));
+		assertEquals("empty", stackToString(game.foundation()[1]));
+		assertEquals("A C   ", stackToString(game.foundation()[2]));
+		assertEquals("empty", stackToString(game.foundation()[3]));
+		assertEquals("3 S   2-H   A S   ", stackToString(game.openTableau()[5]));
+		
+		game.movePileToFoundation();
+		
+//		state();
+		assertEquals("empty", stackToString(game.foundation()[0]));
+		assertEquals("empty", stackToString(game.foundation()[1]));
+		assertEquals("A C   ", stackToString(game.foundation()[2]));
+		assertEquals("A S   ", stackToString(game.foundation()[3]));
+		assertEquals("3 S   2-H   ", stackToString(game.openTableau()[5]));
+		
+		game.moveFoundationToPile();
+		
+//		state();
+		assertEquals("empty", stackToString(game.foundation()[0]));
+		assertEquals("empty", stackToString(game.foundation()[1]));
+		assertEquals("empty", stackToString(game.foundation()[2]));
+		assertEquals("A S   ", stackToString(game.foundation()[3]));
+		assertEquals("3 S   2-H   A C   ", stackToString(game.openTableau()[5]));
+		
+		
+		
+		
+		// moving foundation to pile when a King card can go from foundation to an empty pile
+
+//		int seed = findSeed("S");
+//		System.out.println(seed);
+//		state(new Solitaire("633092"));
+		
+		Solitaire game2 = new Solitaire("633092");
+//		state(game2);
+		
+		// put all spades into foundation
+		while (game2.foundation()[3].size() != 13) {
+			
+			game2.moveStockToWaste();
+			
+			try {
+				game2.moveWasteToFoundation();
+			}
+			catch (Exception e) {
+				assertTrue(e instanceof IllegalStateException);
+//				System.out.println("got to here");
+			}
+			
+			try {
+				game2.moveWasteToStock();
+			}
+			catch (Exception e) {
+				assertTrue(e instanceof IllegalStateException);
+			}
+		}
+		
+//		state(game2);
+		
+		// make Open Pile 2 empty so a King can go in there
+		game2.movePileToPile();
+		game2.movePileToPile();
+		assertEquals(0, game2.openTableau()[1].size());
+		assertEquals(13, game2.foundation()[3].size());
+		assertEquals("empty", stackToString(game2.openTableau()[1]));
+		assertEquals("A S   2 S   3 S   4 S   5 S   6 S   7 S   8 S   9 S   10 S  J S   Q S   K S   ", stackToString(game2.foundation()[3]));
+		
+//		state(game2);
+		
+		game2.moveFoundationToPile();
+		
+		state(game2);
+		
+		assertEquals(1, game2.openTableau()[1].size());
+		assertEquals(12, game2.foundation()[3].size());
+		assertEquals("K S   ", stackToString(game2.openTableau()[1]));
+		assertEquals("A S   2 S   3 S   4 S   5 S   6 S   7 S   8 S   9 S   10 S  J S   Q S   ", stackToString(game2.foundation()[3]));
+		
+	}
+	
+	
+	
+	// returns the seed of a game with all of the cards of the face in the stock
+	private int findSeed(String face) {
+		
+		int seed = 0;
+		boolean seedFound = false;
+		
+		while (!seedFound) {
+			Solitaire newGame = new Solitaire("" + seed);
+			int counter = 0;
+			
+		    while (!newGame.stock().isEmpty()) {
+		    	Card card = newGame.stock().pop();
+		    	if (card.getFace().equals(face)) {
+		    		counter++;
+		    	}
+		    }
+			
+		    if (counter == 13) {
+		    	break;
+		    }
+			seed++;
+		}
+		
+		return seed;
+	}
 	
 	@Test
-	public void testMovePile() {
+	public void testMovePileToPile() {
+//		state();
+		
+		// moving a pile with one card to another pile, where pile A goes empty
+		assertEquals(24, game.stock().size());
+		assertEquals(0, game.waste().size());
+		
+		assertEquals(0, game.foundation()[0].size());
+		assertEquals(0, game.foundation()[1].size());
+		assertEquals(0, game.foundation()[2].size());
+		assertEquals(0, game.foundation()[3].size());
+		
+		assertEquals(1, game.openTableau()[0].size());
+		assertEquals(1, game.openTableau()[1].size());
+		assertEquals(1, game.openTableau()[2].size());
+		assertEquals(1, game.openTableau()[3].size());
+		assertEquals(1, game.openTableau()[4].size());
+		assertEquals(1, game.openTableau()[5].size());
+		assertEquals(1, game.openTableau()[6].size());
+		
+		assertNull(game.closedTableau()[0]);
+		assertEquals(1, game.closedTableau()[1].size());
+		assertEquals(2, game.closedTableau()[2].size());
+		assertEquals(3, game.closedTableau()[3].size());
+		assertEquals(4, game.closedTableau()[4].size());
+		assertEquals(5, game.closedTableau()[5].size());
+		assertEquals(6, game.closedTableau()[6].size());
+		
+		assertEquals("2-H   ", stackToString(game.openTableau()[0]));
+		assertEquals("3 S   ", stackToString(game.openTableau()[5]));
+		assertEquals(1, game.openTableau()[0].size());
+		assertEquals(1, game.openTableau()[5].size());
+		assertNull(game.closedTableau()[0]);
+		assertEquals(5, game.closedTableau()[5].size());
+		
+		game.movePileToPile();
+		
+		assertEquals("empty", stackToString(game.openTableau()[0]));
+		assertEquals("3 S   2-H   ", stackToString(game.openTableau()[5]));
+		assertEquals(0, game.openTableau()[0].size());
+		assertEquals(2, game.openTableau()[5].size());
+		assertNull(game.closedTableau()[0]);
+		assertEquals(5, game.closedTableau()[5].size());
+		
+		
+		
+		
+		
+		// moving a pile with one card to another pile, where pile A gets from closed pile
+		
+//		state();
+
+		assertEquals("A C   ", stackToString(game.openTableau()[1]));
+		assertEquals("3 S   2-H   ", stackToString(game.openTableau()[5]));
+		assertEquals(1, game.openTableau()[1].size());
+		assertEquals(2, game.openTableau()[5].size());
+		assertEquals(1, game.closedTableau()[1].size());
+		assertEquals(5, game.closedTableau()[5].size());
+		assertEquals("4-D   ", stackToString(game.closedTableau()[1]));
+		
+		game.movePileToPile();
+		
+		assertEquals("4-D   ", stackToString(game.openTableau()[1]));
+		assertEquals("3 S   2-H   A C   ", stackToString(game.openTableau()[5]));
+		assertEquals(1, game.openTableau()[1].size());
+		assertEquals(3, game.openTableau()[5].size());
+		assertEquals(0, game.closedTableau()[1].size());
+		assertEquals(5, game.closedTableau()[5].size());
+		assertEquals("empty", stackToString(game.closedTableau()[1]));
+		
+		
+		
+		
+		// moving an entire pile with multiple cards to another pile
+//		state();
+		
+		assertEquals("4-D   ", stackToString(game.openTableau()[1]));
+		assertEquals("3 S   2-H   A C   ", stackToString(game.openTableau()[5]));
+		assertEquals(1, game.openTableau()[1].size());
+		assertEquals(3, game.openTableau()[5].size());
+		assertEquals(0, game.closedTableau()[1].size());
+		assertEquals(5, game.closedTableau()[5].size());
+		assertEquals("7-D   K-D   A-H   9-D   10 S  ", stackToString(game.closedTableau()[5]));
+		
+		game.movePileToPile();
+		
+		assertEquals("4-D   3 S   2-H   A C   ", stackToString(game.openTableau()[1]));
+		assertEquals("10 S  ", stackToString(game.openTableau()[5]));
+		assertEquals(4, game.openTableau()[1].size());
+		assertEquals(1, game.openTableau()[5].size());
+		assertEquals(0, game.closedTableau()[1].size());
+		assertEquals(4, game.closedTableau()[5].size());
+		assertEquals("7-D   K-D   A-H   9-D   ", stackToString(game.closedTableau()[5]));
+		
+		
+		
+		
+		// moving a king card to a pile with no cards
+		
+//		state();
+		
+		assertEquals("empty", stackToString(game.openTableau()[0]));
+		assertEquals("K C   ", stackToString(game.openTableau()[6]));
+		assertEquals(0, game.openTableau()[0].size());
+		assertEquals(1, game.openTableau()[6].size());
+		assertNull(game.closedTableau()[0]);
+		assertEquals(6, game.closedTableau()[6].size());
+		assertEquals("7 C   8-H   2 C   6-H   J-D   6-D   ", stackToString(game.closedTableau()[6]));
+		
+		game.movePileToPile();
+		
+		assertEquals("K C   ", stackToString(game.openTableau()[0]));
+		assertEquals("6-D   ", stackToString(game.openTableau()[6]));
+		assertEquals(1, game.openTableau()[0].size());
+		assertEquals(1, game.openTableau()[6].size());
+		assertNull(game.closedTableau()[0]);
+		assertEquals(5, game.closedTableau()[6].size());
+		assertEquals("7 C   8-H   2 C   6-H   J-D   ", stackToString(game.closedTableau()[6]));
+		
+		
+		
+		
+		// not being able to move any cards = exception
+		
+//		state();
+		
+		try {
+			game.movePileToPile();
+			fail();
+		}
+		catch (Exception e) {
+			assertTrue(e instanceof IllegalStateException);
+		}
+		
+		
+		
+	
+		// moving middle of pile to another pile (you use this if you have to move a card to foundation)
+		
+//		state();
+		// move A C to foundation, so Open 2: 4-D   3 S   2-H   A C
+		game.movePileToFoundation();
+		
+//		state();
+		// move A S to foundation
+		game.movePileToFoundation();
+		
+		// TODO: move A C back onto Open 2
+		
+//		state();
+		// move a bunch of stock to waste until you get 3 C
+		for (int i = 0; i < 17; i++) {
+			game.moveStockToWaste();
+		}
+//		state();
+		
+		// put 3 C from waste in open pile 4, so Open 4: 4-H   3 C
+		game.moveWasteToPile();
+		
+//		state();
+
+		// move a bunch of stock to waste until you get 2 S, which you put in foundation
+		// at this point try calling game.moveWasteToFoundation, which should move 3 S to foundation and 2-H   A C    to 4-H   3 C
+		
+		// TODO: make it so it doesn't actually go into foundation, just moves the card into the new pile
+		
+		
+		
+		
+		
 //		state();
 		
 		// START: NOTHING
 		
 //		System.out.println("STARTING ROUND 1");
-		game.movePile();
+//		game.movePileToPile();
 		
 //		state();
 		// AFTER ROUND 1: Open 6: 3 S   2-H
@@ -821,7 +1206,7 @@ public class SolitaireTest {
 		
 		
 //		System.out.println("STARTING ROUND 2");
-		game.movePile();
+//		game.movePileToPile();
 		
 //		state();
 		// AFTER ROUND 2: Open 6: 3 S   2-H   A C
@@ -830,7 +1215,7 @@ public class SolitaireTest {
 		
 		
 //		System.out.println("STARTING ROUND 3");
-		game.movePile();
+//		game.movePileToPile();
 		
 //		state();
 		// AFTER ROUND 3: Open 2: 4-D   3 S   2-H   A C
@@ -839,14 +1224,20 @@ public class SolitaireTest {
 		
 		
 //		System.out.println("STARTING ROUND 4");
-		game.movePile();
+//		game.movePileToPile();
 		
-		state();
+//		state();
 		
 		
 		
-		System.out.println("STARTING ROUND 5");
-		game.movePile();
+//		System.out.println("STARTING ROUND 5");
+//		game.movePile();
+		
+		// TODO: move method into movePileToPile, then thoroughly test it here
+		
+		
 	}
+	
+	
 
 }

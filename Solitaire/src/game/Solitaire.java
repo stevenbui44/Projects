@@ -23,6 +23,7 @@ import structures.ArrayBasedStack;
  * 1. you can choose a manual mode instead of auto mode, where you choose which stack a card goes to
  * 2. points system, figure that out
  * 3. 3 card mode instead of 1 card mode, way harder to implement
+ * 4. give in a specific seed to get a deck where you can win the game almost instantly, like all hearts in order in foundation
  */
 
 public class Solitaire {
@@ -410,144 +411,144 @@ public class Solitaire {
         
     }
 
-    public void movePileToPile() {
-    	
-    	// stage 1: moving King to an empty pile, or moving end of a pile to the end of another pile
-    	for (int i = 0; i < 7; i++) {
-    		for (int j = 0; j < 7; j++) {
-    			
-    			// moves a King from pile j to an empty pile i
-    			if (openTableau[i].isEmpty() && !openTableau[j].isEmpty() && openTableau[j].top().getValue().equals("K")) {
-	    			openTableau[i].push(openTableau[j].pop());
-	    			// if you need to get a card from closed tableau
-    				if (openTableau[j].isEmpty() && closedTableau[j] != null && !closedTableau[j].isEmpty()) {
-    					openTableau[j].push(closedTableau[j].pop());
-    				}
-	    			return;
-    			}
-    			
-    			
-    			
-    			// moves a King from pile i to an empty pile j
-    			if (i != j && openTableau[j].isEmpty() && !openTableau[i].isEmpty() && openTableau[i].top().getValue().equals("K")) {
-	    			openTableau[j].push(openTableau[i].pop());
-	    			// if you need to get a card from closed tableau
-    				if (openTableau[i].isEmpty() && closedTableau[i] != null && !closedTableau[i].isEmpty()) {
-    					openTableau[i].push(closedTableau[i].pop());
-    				}
-	    			return;
-    			}
-    			
-    			
-    			
-    			// moves a pile i to pile j
-    			if (!openTableau[i].isEmpty() && !openTableau[j].isEmpty()) {
-	    			Card a = openTableau[i].top();
-	    			Card b = openTableau[j].top();
-	    			
-	    			// see if you can move one end card from pile i to pile j
-	    			if (i != j && !openTableau[i].isEmpty() && !openTableau[j].isEmpty() && Integer.parseInt(a.updateValue()) == (Integer.parseInt(b.updateValue()) - 1) && a.getColor() != b.getColor()) {
-	    				openTableau[j].push(openTableau[i].pop());
-	    				
-	    				// if you need to get a card from closed tableau
-	    				if (openTableau[i].isEmpty() && closedTableau[i] != null && !closedTableau[i].isEmpty()) {
-	    					openTableau[i].push(closedTableau[i].pop());
-	    				}
-	    				
-	    				return;
-	    			}
-	    			
-    			}
-    			
-    		}
-    	}
-    	// end of stage 1
-    	
-    	// THOUGHTS: this for loop is only used for stage 1: moving King to an empty pile and moving the end of a pile
-    	// to the end of another pile. However, if neither of those work, ONLY THEN should you go on to stage 2: moving 
-    	// the top of a stack to the end of another stack. This means you need a reference to the bottom of the stack (aka
-    	// the top of the pile to move). This should be separate from stage 3: checking if you should move a card from the
-    	// middle of a pile because the card underneath it can go into foundation
-    	
-    	// stage 2: moving the top of a stack to the end of another stack
-    	
-    	// NOTE: you probably have to make a new private variable called top of deck or something creative which is just
-    	// an array of all of the top cards, this also means knowing how to update it when you get a card from closed pile
-    	
-    	// NOTE: option 2 is not making a new private variable and instead just running through the stack like in stage 3
-    	// until you see a card that can move, but this issue 
-    	// actually since the card underneath it has to be able to go into foundation, let's just go with this
-    	
+//    public void movePile() {
+//    	
+//    	// stage 1: moving King to an empty pile, or moving end of a pile to the end of another pile
 //    	for (int i = 0; i < 7; i++) {
 //    		for (int j = 0; j < 7; j++) {
 //    			
-//    			ArrayBasedQueue<Card> queue = new ArrayBasedQueue<Card>();
-//    			boolean moveToFoundation = false;
-//    			
-//    			if (i != j) {
-//    			// remove all contents from openTableau and put them into queue
-//	    			while (!openTableau[i].isEmpty()) {
-//	    				
-//	    				// TODO: just add an if i == j break statement here
-//	    				
-//	    				// if a card from the middle of i can go into j, do so
-//	    				if (!openTableau[j].isEmpty() && Integer.parseInt(openTableau[i].top().updateValue()) == (Integer.parseInt(openTableau[j].top().updateValue()) - 1) && openTableau[i].top().getColor() != openTableau[j].top().getColor()) {
-//	    					openTableau[j].push(openTableau[i].pop());
-//	    					
-//	    					if (openTableau[i].isEmpty()) {
-//	    						break;
-//	    					}
-//	    					// test the next card in i. if it can't go in foundation, put back the card that is currently in j, then put back whatever is in queue
-//	    					// i can't call movePileToFoundation because it might move the wrong card. i have to handle it manually
-//	    					
-//	//    					boolean moved = false;
-//	    					    					
-//	    					// TODO: update this to movePileToFoundation when you update the entire game to manually choose the pile
-//	    					for (int k = 0; k < 4; k++) {
-//	    						
-//	    						// if the next card from i can go into foundation, do so
-//	    						if (!foundation()[k].isEmpty() && openTableau[i].top().getFace().equals(foundation()[k].top().getFace()) && Integer.parseInt(openTableau[i].top().updateValue()) == Integer.parseInt(foundation()[k].top().updateValue()) + 1) {
-//	    							foundation[k].push(openTableau[i].top());
-//	    							moveToFoundation = true;
-//	    							break;
-//	    						}
-//	    					}
-//	    					
-//	    					// if nothing went into foundation after moving stuff into queue and putting i into j, put the card from j back onto i
-//	    					if (!moveToFoundation) {
-//	    						openTableau[i].push(openTableau[j].pop());
-//	    						break;
-//	//    						while (!queue.isEmpty()) {
-//	//    		    				openTableau[i].push(queue.dequeue());
-//	//    		    			}
-//	//    						break;
-//	    					}
-//	    				}
-//	    				
-//	    				else {
-//	    					queue.enqueue(openTableau[i].pop());
-//	    				}
-//	    			}
-//	    			
-//	    			
-//	    			// removing all contents from queue and putting them into openTableau
-//	    			while (!queue.isEmpty()) {
-//	    				if (i != j) {
-//	    					openTableau[i].push(queue.dequeue());
-//	    				}
-//	    			}
+//    			// moves a King from pile j to an empty pile i
+//    			if (openTableau[i].isEmpty() && !openTableau[j].isEmpty() && openTableau[j].top().getValue().equals("K")) {
+//	    			openTableau[i].push(openTableau[j].pop());
+//	    			// if you need to get a card from closed tableau
+//    				if (openTableau[j].isEmpty() && closedTableau[j] != null && !closedTableau[j].isEmpty()) {
+//    					openTableau[j].push(closedTableau[j].pop());
+//    				}
+//	    			return;
 //    			}
 //    			
-//    			// refill openTableau with whatever is in temp
+//    			
+//    			
+//    			// moves a King from pile i to an empty pile j
+//    			if (i != j && openTableau[j].isEmpty() && !openTableau[i].isEmpty() && openTableau[i].top().getValue().equals("K")) {
+//	    			openTableau[j].push(openTableau[i].pop());
+//	    			// if you need to get a card from closed tableau
+//    				if (openTableau[i].isEmpty() && closedTableau[i] != null && !closedTableau[i].isEmpty()) {
+//    					openTableau[i].push(closedTableau[i].pop());
+//    				}
+//	    			return;
+//    			}
+//    			
+//    			
+//    			
+//    			// moves a pile i to pile j
+//    			if (!openTableau[i].isEmpty() && !openTableau[j].isEmpty()) {
+//	    			Card a = openTableau[i].top();
+//	    			Card b = openTableau[j].top();
+//	    			
+//	    			// see if you can move one end card from pile i to pile j
+//	    			if (i != j && !openTableau[i].isEmpty() && !openTableau[j].isEmpty() && Integer.parseInt(a.updateValue()) == (Integer.parseInt(b.updateValue()) - 1) && a.getColor() != b.getColor()) {
+//	    				openTableau[j].push(openTableau[i].pop());
+//	    				
+//	    				// if you need to get a card from closed tableau
+//	    				if (openTableau[i].isEmpty() && closedTableau[i] != null && !closedTableau[i].isEmpty()) {
+//	    					openTableau[i].push(closedTableau[i].pop());
+//	    				}
+//	    				
+//	    				return;
+//	    			}
+//	    			
+//    			}
+//    			
 //    		}
 //    	}
+//    	// end of stage 1
 //    	
+//    	// THOUGHTS: this for loop is only used for stage 1: moving King to an empty pile and moving the end of a pile
+//    	// to the end of another pile. However, if neither of those work, ONLY THEN should you go on to stage 2: moving 
+//    	// the top of a stack to the end of another stack. This means you need a reference to the bottom of the stack (aka
+//    	// the top of the pile to move). This should be separate from stage 3: checking if you should move a card from the
+//    	// middle of a pile because the card underneath it can go into foundation
 //    	
-//    	// after this, maybe see if it might make sense to just incorporate everything into one giant double for loop
+//    	// stage 2: moving the top of a stack to the end of another stack
 //    	
+//    	// NOTE: you probably have to make a new private variable called top of deck or something creative which is just
+//    	// an array of all of the top cards, this also means knowing how to update it when you get a card from closed pile
 //    	
-//    	throw new IllegalStateException();
-    }
+//    	// NOTE: option 2 is not making a new private variable and instead just running through the stack like in stage 3
+//    	// until you see a card that can move, but this issue 
+//    	// actually since the card underneath it has to be able to go into foundation, let's just go with this
+//    	
+////    	for (int i = 0; i < 7; i++) {
+////    		for (int j = 0; j < 7; j++) {
+////    			
+////    			ArrayBasedQueue<Card> queue = new ArrayBasedQueue<Card>();
+////    			boolean moveToFoundation = false;
+////    			
+////    			if (i != j) {
+////    			// remove all contents from openTableau and put them into queue
+////	    			while (!openTableau[i].isEmpty()) {
+////	    				
+////	    				// TODO: just add an if i == j break statement here
+////	    				
+////	    				// if a card from the middle of i can go into j, do so
+////	    				if (!openTableau[j].isEmpty() && Integer.parseInt(openTableau[i].top().updateValue()) == (Integer.parseInt(openTableau[j].top().updateValue()) - 1) && openTableau[i].top().getColor() != openTableau[j].top().getColor()) {
+////	    					openTableau[j].push(openTableau[i].pop());
+////	    					
+////	    					if (openTableau[i].isEmpty()) {
+////	    						break;
+////	    					}
+////	    					// test the next card in i. if it can't go in foundation, put back the card that is currently in j, then put back whatever is in queue
+////	    					// i can't call movePileToFoundation because it might move the wrong card. i have to handle it manually
+////	    					
+////	//    					boolean moved = false;
+////	    					    					
+////	    					// TODO: update this to movePileToFoundation when you update the entire game to manually choose the pile
+////	    					for (int k = 0; k < 4; k++) {
+////	    						
+////	    						// if the next card from i can go into foundation, do so
+////	    						if (!foundation()[k].isEmpty() && openTableau[i].top().getFace().equals(foundation()[k].top().getFace()) && Integer.parseInt(openTableau[i].top().updateValue()) == Integer.parseInt(foundation()[k].top().updateValue()) + 1) {
+////	    							foundation[k].push(openTableau[i].top());
+////	    							moveToFoundation = true;
+////	    							break;
+////	    						}
+////	    					}
+////	    					
+////	    					// if nothing went into foundation after moving stuff into queue and putting i into j, put the card from j back onto i
+////	    					if (!moveToFoundation) {
+////	    						openTableau[i].push(openTableau[j].pop());
+////	    						break;
+////	//    						while (!queue.isEmpty()) {
+////	//    		    				openTableau[i].push(queue.dequeue());
+////	//    		    			}
+////	//    						break;
+////	    					}
+////	    				}
+////	    				
+////	    				else {
+////	    					queue.enqueue(openTableau[i].pop());
+////	    				}
+////	    			}
+////	    			
+////	    			
+////	    			// removing all contents from queue and putting them into openTableau
+////	    			while (!queue.isEmpty()) {
+////	    				if (i != j) {
+////	    					openTableau[i].push(queue.dequeue());
+////	    				}
+////	    			}
+////    			}
+////    			
+////    			// refill openTableau with whatever is in temp
+////    		}
+////    	}
+////    	
+////    	
+////    	// after this, maybe see if it might make sense to just incorporate everything into one giant double for loop
+////    	
+////    	
+////    	throw new IllegalStateException();
+//    }
     
     
 
@@ -601,10 +602,30 @@ public class Solitaire {
     	
     	throw new IllegalStateException();
     }
-//
-//    public void moveFoundationToPile() {
-//        
-//    }
+    
+    
+
+    public void moveFoundationToPile() {
+    	    	
+        for (int i = 0; i < 4; i++) {
+        	for (int j = 0; j < 7; j++) {
+        		
+        		// if the foundation is not empty and the top of foundation can go onto the top of a pile (the foundation's card is the same face and 1 value lower than the pile's card)
+        		if (!foundation()[i].isEmpty() && !openTableau[j].isEmpty() && (foundation()[i].top().getColor() != openTableau[j].top().getColor()) && Integer.parseInt(foundation()[i].top().updateValue()) == Integer.parseInt(openTableau[j].top().updateValue()) - 1) {
+        			openTableau[j].push(foundation()[i].pop());
+        			return;
+        		}
+        		
+        		// if the foundation is empty and the pile is empty, you can add a King from foundation (not sure why you would do this but you can)
+        		if (!foundation()[i].isEmpty() && openTableau[j].isEmpty() && foundation()[i].top().getValue().equals("K")) {
+        			openTableau[j].push(foundation()[i].pop());
+        			return;
+        		}
+        	}
+        }
+        
+        throw new IllegalStateException();
+    }
     
     
     
@@ -673,7 +694,7 @@ public class Solitaire {
  	}
     
     
-    public void movePile() {
+    public void movePileToPile() {
     	
 //    	// pseudocode
 //    	for int i to 7

@@ -595,6 +595,12 @@ public class SolitaireTest {
 		assertEquals(5, game.closedTableau()[5].size());
 		assertEquals(6, game.closedTableau()[6].size());
 		
+		assertEquals("empty", stackToString(game.foundation()[0]));
+		assertEquals("empty", stackToString(game.foundation()[1]));
+		assertEquals("A C   ", stackToString(game.foundation()[2]));
+		assertEquals("A S   ", stackToString(game.foundation()[3]));
+//		state();
+		
 		
 		
 		// moving pile to foundation when there are cards in pile that can go in foundation when foundation is not empty
@@ -643,7 +649,7 @@ public class SolitaireTest {
 		
 		
 		
-		// moving pile to foundation when there are no cards in pile that can go in foundation
+		// moving pile to foundation when there are no cards in pile that can go in foundation = exception
 //		state();
 		
 		assertEquals(5, game.stock().size());
@@ -678,16 +684,30 @@ public class SolitaireTest {
 			assertTrue(e instanceof IllegalStateException);
 		}
 		
-		
-		
+//		state();
 		
 		
 		
 		// moving a pile to foundation when there are multiple cards in pile, so you don't have to change closedPile
 		// TODO: test after implementing movePileToPile
 		
+		game = new Solitaire("1");
+		
+		game.movePileToPile();
+		game.movePileToPile();
+		game.movePileToPile();
+		game.movePileToPile();
+		
+		assertEquals("4-D   3 S   2-H   A C   ", stackToString(game.openTableau()[1]));
+		assertEquals("empty", stackToString(game.foundation()[2]));
+		
+		game.movePileToFoundation();
+		
+		assertEquals("4-D   3 S   2-H   ", stackToString(game.openTableau()[1]));
+		assertEquals("A C   ", stackToString(game.foundation()[2]));
 		
 		
+//		state();
 	}
 //	
 //	

@@ -47,31 +47,7 @@ public class SolitaireTest {
 		StringBuilder rtn = new StringBuilder();
 		
 	    while (!stack.isEmpty()) {
-	        temp.push(stack.pop());
-//	        String value = temp.top().getValue();
-//	        String face = temp.top().getFace();
-//	        boolean color = temp.top().getColor();
-	        
-	        
-//	        rtn = rtn + temp.top().getValue();
-//	        
-//	        if (temp.top().getColor()) {
-//	        	rtn = rtn + "-";
-//	        }
-//	        else {
-//	        	rtn = rtn + " ";
-//	        }
-//	        
-//	        rtn = rtn + temp.top().getFace();
-//	        
-//	        if (temp.top().getValue().equals("10")) {
-//	        	rtn = rtn + "  ";
-//	        }
-//	        else {
-//	        	rtn = rtn + "   ";
-//	        }
-	    	
-	    	
+	        temp.push(stack.pop());	
 	    }
 	    while (!temp.isEmpty()) {
 	        stack.push(temp.pop());
@@ -88,32 +64,6 @@ public class SolitaireTest {
 		
 		return rtn.toString();
 	}
-	
-//	private void state() {
-//		System.out.println("Stock: " + stackToString(game.stock()));
-//		System.out.println("Waste: " + stackToString(game.waste()));
-//		System.out.println("- - - - -");
-//		System.out.println("Closed 1: " + stackToString(game.closedTableau()[0]));
-//		System.out.println("Closed 2: " + stackToString(game.closedTableau()[1]));
-//		System.out.println("Closed 3: " + stackToString(game.closedTableau()[2]));
-//		System.out.println("Closed 4: " + stackToString(game.closedTableau()[3]));
-//		System.out.println("Closed 5: " + stackToString(game.closedTableau()[4]));
-//		System.out.println("Closed 6: " + stackToString(game.closedTableau()[5]));
-//		System.out.println("Closed 7: " + stackToString(game.closedTableau()[6]));
-//		System.out.println("- - - - -");
-//		System.out.println("Open 1: " + stackToString(game.openTableau()[0]));
-//		System.out.println("Open 2: " + stackToString(game.openTableau()[1]));
-//		System.out.println("Open 3: " + stackToString(game.openTableau()[2]));
-//		System.out.println("Open 4: " + stackToString(game.openTableau()[3]));
-//		System.out.println("Open 5: " + stackToString(game.openTableau()[4]));
-//		System.out.println("Open 6: " + stackToString(game.openTableau()[5]));
-//		System.out.println("Open 7: " + stackToString(game.openTableau()[6]));
-//		System.out.println("- - - - -");
-//		System.out.println("Hearts:   " + stackToString(game.foundation()[0]));
-//		System.out.println("Diamonds: " + stackToString(game.foundation()[1]));
-//		System.out.println("Clubs:    " + stackToString(game.foundation()[2]));
-//		System.out.println("Spades:   " + stackToString(game.foundation()[3]) + "\n\n\n");
-//	}
 	
 	public void state() {
 		state(game);
@@ -348,7 +298,7 @@ public class SolitaireTest {
 		
 		
 		
-		// try moving waste to pile when the waste cannot go in any piles
+		// try moving waste to pile when the waste is not empty and cannot go in any piles
 		game.moveStockToWaste();
 //		state();
 		
@@ -388,6 +338,9 @@ public class SolitaireTest {
 		assertEquals(1, game.openTableau()[5].size());
 		assertEquals(1, game.openTableau()[6].size());
 		
+		assertEquals("8-D   6 C   10-H  9 C   J S   7-H   4 C   5 S   Q S   K-H   Q-D   ", stackToString(game.waste()));
+		assertEquals("K C   ", stackToString(game.openTableau()[6]));
+		
 		game.moveWasteToPile();
 		
 		assertEquals(13, game.stock().size());
@@ -400,10 +353,8 @@ public class SolitaireTest {
 		assertEquals(1, game.openTableau()[5].size());
 		assertEquals(2, game.openTableau()[6].size());
 		
-		assertEquals("Q", game.openTableau()[6].top().getValue());
-		assertEquals("D", game.openTableau()[6].top().getFace());
-		
-		
+		assertEquals("8-D   6 C   10-H  9 C   J S   7-H   4 C   5 S   Q S   K-H   ", stackToString(game.waste()));
+		assertEquals("K C   Q-D   ", stackToString(game.openTableau()[6]));
 		
 		
 		
@@ -411,13 +362,53 @@ public class SolitaireTest {
 		
 		// try moving waste to pile when the pile is empty and waste is not a king
 		
+		assertEquals(1, game.openTableau()[0].size());
+		assertEquals("2-H   ", stackToString(game.openTableau()[0]));
+		
+		game.movePileToPile();
+		
+		assertEquals(0, game.openTableau()[0].size());
+		assertEquals("empty", stackToString(game.openTableau()[0]));
+		
+		game.moveStockToWaste();
+		
+		assertEquals("8-D   6 C   10-H  9 C   J S   7-H   4 C   5 S   Q S   K-H   5-D   ", stackToString(game.waste()));
+		assertEquals("5", game.waste().top().getValue());
+		assertEquals("D", game.waste().top().getFace());
+		
+		try {
+			game.moveWasteToPile();
+			fail();
+		}
+		catch (Exception e) {
+			assertTrue(e instanceof IllegalStateException);
+		}
+		
+//		state();
+		
+		
+		
+		
 		// try moving waste to pile when the pile is empty and waste is a king
+		for (int i = 0; i < 12; i++) {
+			game.moveStockToWaste();
+		}
 		
-		// TODO: not done
+		assertEquals("8-D   6 C   10-H  9 C   J S   7-H   4 C   5 S   Q S   K-H   5-D   7 S   5-H   9 S   9-H   3 C   6 S   2 S   A-D   Q-H   2-D   10-D  K S   ", stackToString(game.waste()));
+		assertEquals("K", game.waste().top().getValue());
+		assertEquals("S", game.waste().top().getFace());
+		assertEquals("empty", stackToString(game.openTableau()[0]));
+		
+		game.moveWasteToPile();
+		
+		assertEquals("8-D   6 C   10-H  9 C   J S   7-H   4 C   5 S   Q S   K-H   5-D   7 S   5-H   9 S   9-H   3 C   6 S   2 S   A-D   Q-H   2-D   10-D  ", stackToString(game.waste()));
+		assertEquals("10", game.waste().top().getValue());
+		assertEquals("D", game.waste().top().getFace());
+		assertEquals("K S   ", stackToString(game.openTableau()[0]));
 		
 		
 		
-		
+//		state();
 	}
 	
 	@Test
@@ -522,129 +513,6 @@ public class SolitaireTest {
 		
 		
 	}
-	
-//	@Test
-//	public void testMovePile() {
-////		state();
-//		
-//		// moving a pile with one card to another pile, where pile A goes empty
-//		assertEquals(24, game.stock().size());
-//		assertEquals(0, game.waste().size());
-//		
-//		assertEquals(0, game.foundation()[0].size());
-//		assertEquals(0, game.foundation()[1].size());
-//		assertEquals(0, game.foundation()[2].size());
-//		assertEquals(0, game.foundation()[3].size());
-//		
-//		assertEquals(1, game.openTableau()[0].size());
-//		assertEquals(1, game.openTableau()[1].size());
-//		assertEquals(1, game.openTableau()[2].size());
-//		assertEquals(1, game.openTableau()[3].size());
-//		assertEquals(1, game.openTableau()[4].size());
-//		assertEquals(1, game.openTableau()[5].size());
-//		assertEquals(1, game.openTableau()[6].size());
-//		
-//		assertNull(game.closedTableau()[0]);
-//		assertEquals(1, game.closedTableau()[1].size());
-//		assertEquals(2, game.closedTableau()[2].size());
-//		assertEquals(3, game.closedTableau()[3].size());
-//		assertEquals(4, game.closedTableau()[4].size());
-//		assertEquals(5, game.closedTableau()[5].size());
-//		assertEquals(6, game.closedTableau()[6].size());
-//		
-//		assertEquals("2-H   ", stackToString(game.openTableau()[0]));
-//		assertEquals("3 S   ", stackToString(game.openTableau()[5]));
-//		
-//		game.movePileToPile();
-//		
-//		assertEquals(24, game.stock().size());
-//		assertEquals(0, game.waste().size());
-//		
-//		assertEquals(0, game.foundation()[0].size());
-//		assertEquals(0, game.foundation()[1].size());
-//		assertEquals(0, game.foundation()[2].size());
-//		assertEquals(0, game.foundation()[3].size());
-//		
-//		assertEquals(0, game.openTableau()[0].size());
-//		assertEquals(1, game.openTableau()[1].size());
-//		assertEquals(1, game.openTableau()[2].size());
-//		assertEquals(1, game.openTableau()[3].size());
-//		assertEquals(1, game.openTableau()[4].size());
-//		assertEquals(2, game.openTableau()[5].size());
-//		assertEquals(1, game.openTableau()[6].size());
-//		
-//		assertNull(game.closedTableau()[0]);
-//		assertEquals(1, game.closedTableau()[1].size());
-//		assertEquals(2, game.closedTableau()[2].size());
-//		assertEquals(3, game.closedTableau()[3].size());
-//		assertEquals(4, game.closedTableau()[4].size());
-//		assertEquals(5, game.closedTableau()[5].size());
-//		assertEquals(6, game.closedTableau()[6].size());
-//		
-//		assertEquals("empty", stackToString(game.openTableau()[0]));
-//		assertEquals("3 S   2-H   ", stackToString(game.openTableau()[5]));
-//		
-//		
-//		
-//		// moving a king card to a pile with no cards
-////		state();
-//		
-//		assertEquals("empty", stackToString(game.openTableau()[0]));
-//		assertEquals("K C   ", stackToString(game.openTableau()[6]));
-//		assertEquals(0, game.openTableau()[0].size());
-//		assertEquals(1, game.openTableau()[6].size());
-//		assertNull(game.closedTableau()[0]);
-//		assertEquals(6, game.closedTableau()[6].size());
-//		assertEquals("7 C   8-H   2 C   6-H   J-D   6-D   ", stackToString(game.closedTableau()[6]));
-//
-//		game.movePileToPile();
-//		
-//		assertEquals("K C   ", stackToString(game.openTableau()[0]));
-//		assertEquals("6-D   ", stackToString(game.openTableau()[6]));
-//		assertEquals(1, game.openTableau()[0].size());
-//		assertEquals(1, game.openTableau()[6].size());
-//		assertNull(game.closedTableau()[0]);
-//		assertEquals(5, game.closedTableau()[6].size());
-//		assertEquals("7 C   8-H   2 C   6-H   J-D   ", stackToString(game.closedTableau()[6]));
-//				
-//		
-//		
-//		// moving a pile with one card to another pile, where pile A gets from closed pile
-////		state();
-//		
-//		assertEquals("A C   ", stackToString(game.openTableau()[1]));
-//		assertEquals("3 S   2-H   ", stackToString(game.openTableau()[5]));
-//		assertEquals(1, game.openTableau()[1].size());
-//		assertEquals(2, game.openTableau()[5].size());
-//		assertEquals(1, game.closedTableau()[1].size());
-//		assertEquals(5, game.closedTableau()[5].size());
-//		assertEquals("4-D   ", stackToString(game.closedTableau()[1]));
-//		
-//		game.movePileToPile();
-//		
-//		assertEquals("4-D   ", stackToString(game.openTableau()[1]));
-//		assertEquals("3 S   2-H   A C   ", stackToString(game.openTableau()[5]));
-//		assertEquals(1, game.openTableau()[1].size());
-//		assertEquals(3, game.openTableau()[5].size());
-//		assertEquals(0, game.closedTableau()[1].size());
-//		assertEquals(5, game.closedTableau()[5].size());
-//		assertEquals("empty", stackToString(game.closedTableau()[1]));
-//		
-////		state();
-//		
-//		
-//		// moving an entire pile with multiple cards to another pile
-//		
-//		// try to open pile 6 to open pile 2 (not 4, you want 2 to get the pile empty faster)
-////		game.movePileToPile();
-//
-//
-//		
-//		
-//		// TODO: maybe implement later
-//		// moving middle of pile to another pile (you use this if you have to move a card to foundation)
-//		
-//	}
 	
 	@Test
 	public void testMovePileToFoundation() {
@@ -1241,55 +1109,5 @@ public class SolitaireTest {
 		
 		
 		
-		
-		
-		
-//		state();
-		
-		// START: NOTHING
-		
-//		System.out.println("STARTING ROUND 1");
-//		game.movePileToPile();
-		
-//		state();
-		// AFTER ROUND 1: Open 6: 3 S   2-H
-		
-		
-		
-		
-//		System.out.println("STARTING ROUND 2");
-//		game.movePileToPile();
-		
-//		state();
-		// AFTER ROUND 2: Open 6: 3 S   2-H   A C
-		
-		
-		
-		
-//		System.out.println("STARTING ROUND 3");
-//		game.movePileToPile();
-		
-//		state();
-		// AFTER ROUND 3: Open 2: 4-D   3 S   2-H   A C
-		
-		
-		
-		
-//		System.out.println("STARTING ROUND 4");
-//		game.movePileToPile();
-		
-//		state();
-		
-		
-		
-//		System.out.println("STARTING ROUND 5");
-//		game.movePile();
-		
-		// TODO: move method into movePileToPile, then thoroughly test it here
-		
-		
 	}
-	
-	
-
 }

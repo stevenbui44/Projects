@@ -115,6 +115,10 @@ public class SolitaireTest {
 //		System.out.println("Spades:   " + stackToString(game.foundation()[3]) + "\n\n\n");
 //	}
 	
+	public void state() {
+		state(game);
+	}
+	
 	
 	
 	private void state(Solitaire game) {
@@ -984,7 +988,7 @@ public class SolitaireTest {
 		
 		game2.moveFoundationToPile();
 		
-		state(game2);
+//		state(game2);
 		
 		assertEquals(1, game2.openTableau()[1].size());
 		assertEquals(12, game2.foundation()[3].size());
@@ -1169,9 +1173,13 @@ public class SolitaireTest {
 		// move A S to foundation
 		game.movePileToFoundation();
 		
-		// TODO: move A C back onto Open 2
+//		state();
+		
+		// move A C back onto Open 2 to test that it actually works
+		game.moveFoundationToPile();
 		
 //		state();
+		
 		// move a bunch of stock to waste until you get 3 C
 		for (int i = 0; i < 17; i++) {
 			game.moveStockToWaste();
@@ -1182,11 +1190,55 @@ public class SolitaireTest {
 		game.moveWasteToPile();
 		
 //		state();
-
-		// move a bunch of stock to waste until you get 2 S, which you put in foundation
-		// at this point try calling game.moveWasteToFoundation, which should move 3 S to foundation and 2-H   A C    to 4-H   3 C
 		
-		// TODO: make it so it doesn't actually go into foundation, just moves the card into the new pile
+		assertEquals("4-D   3 S   2-H   A C   ", stackToString(game.openTableau()[1]));
+		assertEquals("4-H   3 C   ", stackToString(game.openTableau()[3]));
+		assertEquals("A S   ", stackToString(game.foundation()[3]));
+		
+		for (int i = 0; i < 2; i++) {
+			game.moveStockToWaste();
+		}
+//		state();
+		
+		// move a bunch of stock to waste until you get 2 S, which you put in foundation
+		game.moveWasteToFoundation();
+		
+		assertEquals("4-D   3 S   2-H   A C   ", stackToString(game.openTableau()[1]));
+		assertEquals("4-H   3 C   ", stackToString(game.openTableau()[3]));
+		assertEquals("A S   2 S   ", stackToString(game.foundation()[3]));
+
+		// at this point try calling game.movePileToPile, which should move 3 S to foundation and 2-H   A C    to 4-H   3 C
+		
+		// this will move 10 S to J-H (scared me for a second lol)
+		game.movePileToPile();
+		
+//		state();
+		
+		// this will move 9-D to 10 S (scared me for a second lol)
+		game.movePileToPile();
+		
+//		state();
+		
+		
+		
+		// this SHOULD move the "2-H   A C   " from Open 2 onto the "4-H   3 C   " from Open 4
+		
+//		System.out.println("STARTING ROUND 5");
+//		for (int i = 0; i < 100; i++) {
+//			System.out.println();
+//		}
+//		System.out.println("STARTING ROUND 5");
+		
+//		state();
+		
+		game.movePileToPile();
+		
+//		state();
+		
+		assertEquals("4-D   3 S   ", stackToString(game.openTableau()[1]));
+		assertEquals("4-H   3 C   2-H   A C   ", stackToString(game.openTableau()[3]));
+		assertEquals("A S   2 S   ", stackToString(game.foundation()[3]));
+		
 		
 		
 		

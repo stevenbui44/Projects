@@ -763,14 +763,20 @@ public class Solitaire {
 	    			continue;
 	    		}
 	    		
-//	    		System.out.println("i=" + i + " j=" + j);
-//	    		state();
+//	    		if (i == 1) {
+//		    		System.out.println("i=" + i + " j=" + j);
+//		    		state();
+//	    		}
+	    		
+//	    		System.out.println("here");
 	    		
 	    		while (!openTableau[i].isEmpty()) {
 	    			if (!openTableau[j].isEmpty()) {
 	    				
 //	    				System.out.println("b");
 //    		    		state();
+	    				
+//	    				System.out.println("here");
 	    				
 //	    				System.out.println(openTableau[i].top().updateValue());
 //	    				System.out.println(openTableau[j].top().updateValue());
@@ -781,6 +787,8 @@ public class Solitaire {
 //	    					state();
 	    					
 	    					openTableau[j].push(openTableau[i].pop());
+	    					
+//	    					System.out.println("here");
 	    					
 //	    					// at this point, open pile 1 goes from 2-H to empty
 //	    					System.out.println("b");
@@ -808,17 +816,34 @@ public class Solitaire {
 //	    						System.out.println("here");
 //	    						System.out.println("i=" + openTableau()[i].top());
 //	    						System.out.println("j=" + openTableau()[j].top());
+//	    						
+//	    						System.out.println(openTableau()[i].size());
+//	    						System.out.println(openTableau()[j].size());
+//	    						System.out.println(stack.size());
+	    						
+//	    						System.out.println("here");
 	    						
 	    						
 			    				String[] array = {"H", "D", "C", "S"};
 			    				for (int k = 0; k < 4; k++) {
+			    					
+//			    					if (k == 3) {
+//			    						System.out.println("k=3");
+//			    						System.out.println(foundation[k].isEmpty());
+//			    						System.out.println();
+//			    					}
+//			    					System.out.println("k=" + k);
+			    					
 			    					if (foundation[k].isEmpty() && openTableau[i].top().getFace().equals(array[k]) && Integer.parseInt(openTableau[i].top().updateValue()) == 1) {
 			    						foundation[k].push(openTableau[i].pop());
 			    						return;
 			    					}
 			    					
 			    					else if (!foundation[k].isEmpty() && openTableau[i].top().getFace().equals(array[k]) && Integer.parseInt(openTableau[i].top().updateValue()) == Integer.parseInt(foundation[k].top().updateValue()) + 1) {
-			    						foundation[k].push(openTableau[i].pop());
+//			    						foundation[k].push(openTableau[i].pop());
+			    						
+			    						// TODO: i got rid of this line here
+			    						
 			    						while (!stack.isEmpty()) {
 			    							openTableau[j].push(stack.pop());
 			    						}
@@ -829,10 +854,22 @@ public class Solitaire {
 //			    						System.out.println("k=" + k);
 //			    						System.out.println("stack size=" + stack.size());
 //			    						state();
-			    						openTableau[i].push(openTableau[j].pop());
-			    						break;
+//			    						openTableau[i].push(openTableau[j].pop());
+////			    						System.out.println("here\n");
+//			    						break;
+			    						
+			    						if (k == 3) {
+			    							openTableau[i].push(openTableau[j].pop());
+//				    						System.out.println("here\n");
+				    						break;
+			    						}
+			    						else {
+			    							continue;
+			    						}
 			    					}
 			    				}
+			    				
+//			    				System.out.println("here\n");
 	    					}
 	    				}
 	    				else {

@@ -26,6 +26,7 @@ public class SolitaireTest {
 	 * 5
 	 * 6
 	 * 8
+	 * 13
 	 */
 	public Solitaire game;
 	
@@ -36,8 +37,9 @@ public class SolitaireTest {
 //		Solitaire.main(array);
 //		System.out.println(solitaire.getStack("deck"));
 		
-		game = new Solitaire("8");
+		game = new Solitaire("1");
 	}
+	
 	
 	// outputs a stack without tabs or color, easier to test
 	private String stackToString(ArrayBasedStack<Card> stack) {
@@ -1144,8 +1146,42 @@ public class SolitaireTest {
 //		state();
 //	}
 	
+	public void runSeeds() {
+		
+		int wins = 0;
+		String goodSeeds = "";
+		
+		int runs = 100;
+		
+		for (int i = 0; i < runs; i++) {
+//			Solitaire test = new Solitaire("" + i);
+//			int seed = testGame("" + i);
+			if (testGame("" + i) == 1) {
+				wins++;
+				goodSeeds = goodSeeds + i + " "; 
+			}
+		}
+		
+		System.out.println("\nOut of " + runs + " runs, " + wins + " were successful.");
+		System.out.println("These seeds were: " + goodSeeds);
+	}
+	
+	
+	
+	
 	@Test
 	public void testGame() {
+//		testGame("6");
+		
+		runSeeds();
+		
+	}
+	
+	
+	public int testGame(String seed) {
+		
+		game = new Solitaire(seed);
+		
 		System.out.println("Initial:");
 		state();
 		
@@ -1177,6 +1213,13 @@ public class SolitaireTest {
 				moves++;
 				System.out.println("Moves: " + moves);
 				state();
+				
+				if (game.foundation()[0].size() == 13 && game.foundation()[1].size() == 13 && game.foundation()[2].size() == 13 && game.foundation()[3].size() == 13) {
+					System.out.println("You win");
+//					System.out.println("1");
+					return 1;
+				}
+				
 				continue;
 			}
 			// the game didn't need the call
@@ -1202,6 +1245,13 @@ public class SolitaireTest {
 				moves++;
 				System.out.println("Moves: " + moves);
 				state();
+				
+				if (game.foundation()[0].size() == 13 && game.foundation()[1].size() == 13 && game.foundation()[2].size() == 13 && game.foundation()[3].size() == 13) {
+					System.out.println("You win");
+//					System.out.println("1");
+					return 1;
+				}
+				
 				continue;
 			}
 			// the game didn't need the call
@@ -1277,6 +1327,7 @@ public class SolitaireTest {
 				
 				if (!moved && oldStockSize == game.stock().size()) {
 					// you're probably repeating over and over, so you lose basically
+					System.out.println("\nNo moves left");
 					break;
 				}
 				moved = false;
@@ -1336,8 +1387,10 @@ public class SolitaireTest {
 		
 		
 //		state();
-		
+				
 //		System.out.println("Moves: " + moves);
+//		System.out.println("0");
+		return 0;
 	}
 	
 	

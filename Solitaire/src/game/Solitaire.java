@@ -717,7 +717,7 @@ public class Solitaire {
 //	    						
 //	    						
 //	    					if foundation is empty and openTableau[i].top is an Ace
-//	    						add openTableau[i].top to foundation										// FINISH
+//	    						move it, since it can go to foundation										// FINISH
 //	    						
 //    						else if foundation is not empty and openTableau[i].top can go to foundation (different number, same face)
 //	    						add openTableau[i].top to foundation
@@ -773,26 +773,9 @@ public class Solitaire {
 	    		while (!openTableau[i].isEmpty()) {
 	    			if (!openTableau[j].isEmpty()) {
 	    				
-//	    				System.out.println("b");
-//    		    		state();
-	    				
-//	    				System.out.println("here");
-	    				
-//	    				System.out.println(openTableau[i].top().updateValue());
-//	    				System.out.println(openTableau[j].top().updateValue());
-	    				
 	    				if (Integer.parseInt(openTableau[i].top().updateValue()) == Integer.parseInt(openTableau[j].top().updateValue()) - 1 && openTableau[i].top().getColor() != openTableau[j].top().getColor()) {
 	    					
-//	    					System.out.println("\nc");
-//	    					state();
-	    					
 	    					openTableau[j].push(openTableau[i].pop());
-	    					
-//	    					System.out.println("here");
-	    					
-//	    					// at this point, open pile 1 goes from 2-H to empty
-//	    					System.out.println("b");
-//	    		    		state();
 	    					
 	    					if (openTableau[i].isEmpty()) {
 //	    						openTableau[i].push(openTableau[j].pop());
@@ -802,14 +785,7 @@ public class Solitaire {
 	    						if (closedTableau[i] != null && !closedTableau[i].isEmpty()) {
 	    							openTableau[i].push(closedTableau[i].pop());
 	    						}
-//	    						System.out.println("here");
 	    						return;
-	    						
-//	    						System.out.println(openTableau[i].top().updateValue());
-//			    				System.out.println(openTableau[j].top().updateValue());
-//			    				System.out.println("d");
-//		    		    		state();
-			    				
 	    					}
 	    					else {
 	    						
@@ -826,14 +802,6 @@ public class Solitaire {
 	    						
 			    				String[] array = {"H", "D", "C", "S"};
 			    				for (int k = 0; k < 4; k++) {
-			    					
-//			    					if (k == 3) {
-//			    						System.out.println("k=3");
-//			    						System.out.println(foundation[k].isEmpty());
-//			    						System.out.println();
-//			    					}
-//			    					System.out.println("k=" + k);
-			    					
 			    					if (foundation[k].isEmpty() && openTableau[i].top().getFace().equals(array[k]) && Integer.parseInt(openTableau[i].top().updateValue()) == 1) {
 			    						foundation[k].push(openTableau[i].pop());
 			    						return;
@@ -850,14 +818,6 @@ public class Solitaire {
 			    						return;
 			    					}
 			    					else {
-//			    						System.out.println("i=" + i + " j=" + j);
-//			    						System.out.println("k=" + k);
-//			    						System.out.println("stack size=" + stack.size());
-//			    						state();
-//			    						openTableau[i].push(openTableau[j].pop());
-////			    						System.out.println("here\n");
-//			    						break;
-			    						
 			    						if (k == 3) {
 			    							openTableau[i].push(openTableau[j].pop());
 //				    						System.out.println("here\n");
@@ -868,17 +828,17 @@ public class Solitaire {
 			    						}
 			    					}
 			    				}
-			    				
-//			    				System.out.println("here\n");
 	    					}
 	    				}
 	    				else {
 	    					// nothing
 	    				}
 	    			}
-	    			
 	    			if (openTableau[j].isEmpty()) {
-	    				if (Integer.parseInt(openTableau[i].top().updateValue()) == 13 && !closedTableau[i].isEmpty()) {
+	    				
+//	    				System.out.println(stackToString(stack));
+	    				
+	    				if (Integer.parseInt(openTableau[i].top().updateValue()) == 13 && closedTableau[i] != null && !closedTableau[i].isEmpty()) {
 	    					openTableau[j].push(openTableau[i].pop());
 	    					openTableau[i].push(closedTableau[i].pop());
 	    					while (!stack.isEmpty()) {
@@ -886,6 +846,7 @@ public class Solitaire {
     						}
 	    					return;
 	    				}
+	    				
 	    			}
 	    			
 	    			stack.push(openTableau[i].pop());

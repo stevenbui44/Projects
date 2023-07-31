@@ -1156,7 +1156,11 @@ public class SolitaireTest {
 		for (int i = 0; i < runs; i++) {
 //			Solitaire test = new Solitaire("" + i);
 //			int seed = testGame("" + i);
-			if (testGame("" + i) == 1) {
+			if (strategyOne("" + i) == 1) {
+				wins++;
+				goodSeeds = goodSeeds + i + " "; 
+			}
+			else if (strategyTwo("" + i) == 1) {
 				wins++;
 				goodSeeds = goodSeeds + i + " "; 
 			}
@@ -1171,14 +1175,31 @@ public class SolitaireTest {
 	
 	@Test
 	public void testGame() {
-//		testGame("6");
 		
+		// CHUNK ONE: Timing a single test
+//		long startTime = System.currentTimeMillis();
+//		strategyOne("1");
+//		long endTime = System.currentTimeMillis();
+//		long elapsedTimeInMillis = endTime - startTime;
+//		double elapsedTimeInSeconds = elapsedTimeInMillis / 1000.0;
+//		
+//		System.out.println(elapsedTimeInMillis);
+//		System.out.println(elapsedTimeInSeconds);
+		
+		
+		
+		// CHUNK TWO: Running a single test
+//		strategyTwo("3");
+		
+		
+		
+		// CHUNK TWO: Running a series of tests
 		runSeeds();
 		
 	}
 	
 	
-	public int testGame(String seed) {
+	public int strategyOne(String seed) {
 		
 		game = new Solitaire(seed);
 		
@@ -1320,6 +1341,31 @@ public class SolitaireTest {
 			
 			
 			
+			
+			try {
+				game.moveStockToWaste();
+				System.out.println("Success calling moveStockToWaste()");
+				moves++;
+				System.out.println("Moves: " + moves);
+				state();
+				continue;
+			}
+			// the game didn't need the call
+			catch (Exception e) {
+				// if the call was not successful, it is expected to call an IllegalStateException
+				if (e instanceof IllegalStateException == true) {
+					System.out.println("Error calling moveStockToWaste()");
+				}
+				// if the call was not successful and does not throw an IllegalStateException, you have an error with the method
+				else {
+					System.out.println("General error in moveStockToWaste()\n");
+					state();
+					break;
+				}
+			}
+			
+			
+			
 			// you only call this if the entire stock is empty
 			try {
 				game.moveWasteToStock();
@@ -1354,6 +1400,133 @@ public class SolitaireTest {
 			
 			
 			
+			System.out.println("No moves worked");
+			break;
+			
+			// TODO: you might have to try calling moveFoundationToPile if there are no new moved cards AND the old size is equal to the current size
+			// TODO: if you do this, you have to check that there is a new moved card OR the old size is different from the current size, otherwise you remove it and end the game
+			
+		}
+		// end of loop
+		
+		
+//		state();
+				
+//		System.out.println("Moves: " + moves);
+//		System.out.println("0");
+		return 0;
+	}
+	
+	
+	
+	// NOTE: moveWasteToFoundation HAS to be before movePileToPile since it's possible that a game will call movePileToPile when 
+	// it is moving a pile of cards from the middle of a stack for a card to go to foundation, so that card actually has to go to
+	// foundation
+	
+	
+	
+	public int strategyTwo(String seed) {
+		
+		game = new Solitaire(seed);
+		
+		System.out.println("Initial:");
+		state();
+		
+		int moves = 0;
+		
+		String[] methods = {"movePileToFoundation()", "moveWasteToFoundation()", "movePileToPile()", 
+							"moveWasteToPile()", "movePileToFoundation()", "moveStockToWaste()" };
+		
+		boolean moved = false;
+		int oldStockSize = 0;
+		
+
+		while (1 + 1 == 2) {
+			
+			try {
+				game.movePileToFoundation();
+				System.out.println("Success calling movePileToFoundation()");
+				moved = true;
+				moves++;
+				System.out.println("Moves: " + moves);
+				state();
+				
+				if (game.foundation()[0].size() == 13 && game.foundation()[1].size() == 13 && game.foundation()[2].size() == 13 && game.foundation()[3].size() == 13) {
+					System.out.println("You win");
+//					System.out.println("1");
+					return 1;
+				}
+				
+				continue;
+			}
+			// the game didn't need the call
+			catch (Exception e) {
+				// if the call was not successful, it is expected to call an IllegalStateException
+				if (e instanceof IllegalStateException == true) {
+					System.out.println("Error calling movePileToFoundation()");
+				}
+				// if the call was not successful and does not throw an IllegalStateException, you have an error with the method
+				else {
+					System.out.println("General error in movePileToFoundation()\n");
+					state();
+					break;
+				}
+			}
+			
+			
+			
+			
+			
+			try {
+				game.movePileToPile();
+				System.out.println("Success calling movePileToPile()");
+				moved = true;
+				moves++;
+				System.out.println("Moves: " + moves);
+				state();
+				continue;
+			}
+			// the game didn't need the call
+			catch (Exception e) {
+				// if the call was not successful, it is expected to call an IllegalStateException
+				if (e instanceof IllegalStateException == true) {
+					System.out.println("Error calling movePileToPile()");
+				}
+				// if the call was not successful and does not throw an IllegalStateException, you have an error with the method
+				else {
+					System.out.println("General error in movePileToPile()\n");
+					state();
+					break;
+				}
+			}
+			
+			
+			
+			try {
+				game.moveWasteToPile();
+				System.out.println("Success calling moveWasteToPile()");
+				moved = true;
+				moves++;
+				System.out.println("Moves: " + moves);
+				state();
+				continue;
+			}
+			// the game didn't need the call
+			catch (Exception e) {
+				// if the call was not successful, it is expected to call an IllegalStateException
+				if (e instanceof IllegalStateException == true) {
+					System.out.println("Error calling moveWasteToPile()");
+				}
+				// if the call was not successful and does not throw an IllegalStateException, you have an error with the method
+				else {
+					System.out.println("General error in moveWasteToPile()\n");
+					state();
+					break;
+				}
+			}
+			
+			
+			
 			try {
 				game.moveStockToWaste();
 				System.out.println("Success calling moveStockToWaste()");
@@ -1376,6 +1549,76 @@ public class SolitaireTest {
 				}
 			}
 			
+			
+			
+			
+			try {
+				game.moveWasteToFoundation();
+				System.out.println("Success calling moveWasteToFoundation()");
+				moved = true;
+				moves++;
+				System.out.println("Moves: " + moves);
+				state();
+				
+				if (game.foundation()[0].size() == 13 && game.foundation()[1].size() == 13 && game.foundation()[2].size() == 13 && game.foundation()[3].size() == 13) {
+					System.out.println("You win");
+//					System.out.println("1");
+					return 1;
+				}
+				
+				continue;
+			}
+			// the game didn't need the call
+			catch (Exception e) {
+				// if the call was not successful, it is expected to call an IllegalStateException
+				if (e instanceof IllegalStateException == true) {
+					System.out.println("Error calling moveWasteToFoundation()");
+				}
+				// if the call was not successful and does not throw an IllegalStateException, you have an error with the method
+				else {
+					System.out.println("General error in moveWasteToFoundation(\n)");
+					state();
+					break;
+				}
+			}
+			
+			
+			
+			
+			// you only call this if the entire stock is empty
+			try {
+				game.moveWasteToStock();
+				System.out.println("Success calling moveWasteToStock()");
+				
+				if (!moved && oldStockSize == game.stock().size()) {
+					// you're probably repeating over and over, so you lose basically
+					System.out.println("\nNo moves left");
+					break;
+				}
+				moved = false;
+				oldStockSize = game.stock().size();
+				
+				moves++;
+				System.out.println("Moves: " + moves);
+				state();
+				continue;
+			}
+			// the game didn't need the call
+			catch (Exception e) {
+				// if the call was not successful, it is expected to call an IllegalStateException
+				if (e instanceof IllegalStateException == true) {
+					System.out.println("Error calling moveWasteToStock()");
+				}
+				// if the call was not successful and does not throw an IllegalStateException, you have an error with the method
+				else {
+					System.out.println("General error in moveWasteToStock()\n");
+					state();
+					break;
+				}
+			}
+
+			
+			
 			System.out.println("No moves worked");
 			break;
 			
@@ -1384,12 +1627,6 @@ public class SolitaireTest {
 			
 		}
 		// end of loop
-		
-		
-//		state();
-				
-//		System.out.println("Moves: " + moves);
-//		System.out.println("0");
 		return 0;
 	}
 	

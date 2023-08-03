@@ -20,14 +20,6 @@ public class SolitaireTest {
 		7 S		5-D		Q-D		K-H		Q S		5 S		4 C		7-H		J S		9 C		10-H	6 C		8-D
 	 */
 	
-	/*
-	 * LIST OF GAMES IN WHICH THE GAME WORKS:
-	 * 3
-	 * 5
-	 * 6
-	 * 8
-	 * 13
-	 */
 	public Solitaire game;
 	
 	@BeforeEach
@@ -1196,13 +1188,17 @@ public class SolitaireTest {
 		
 		
 		// CHUNK TWO: Running a series of tests
-		runSeeds();
+//		runSeeds();
+		
+		
+		// CHUNK THREE: Running the run() method in the Solitaire class
+		game = new Solitaire("3");
+		game.run();
 		
 	}
 	
 	
 	public int strategyOne(String seed) {
-		
 		game = new Solitaire(seed);
 		
 		System.out.println("Initial:");
@@ -1210,22 +1206,9 @@ public class SolitaireTest {
 		
 		int moves = 0;
 		
-		String[] methods = {"movePileToFoundation()", "moveWasteToFoundation()", "movePileToPile()", 
-							"moveWasteToPile()", "movePileToFoundation()", "moveStockToWaste()" };
-		
 		boolean moved = false;
 		int oldStockSize = 0;
 		
-//		try {
-//			game.moveWasteToStock();
-//		}
-//		catch (Exception e) {
-//			System.out.println(e instanceof IllegalStateException);
-//		}
-		
-//		System.out.println()
-		
-//		for (int i = 0; i < 23; i++) {
 		while (1 + 1 == 2) {
 			
 			// if the call was successful, you increase moves by 1 and show the new state of the game
@@ -1404,27 +1387,10 @@ public class SolitaireTest {
 			
 			System.out.println("No moves worked");
 			break;
-			
-			// TODO: you might have to try calling moveFoundationToPile if there are no new moved cards AND the old size is equal to the current size
-			// TODO: if you do this, you have to check that there is a new moved card OR the old size is different from the current size, otherwise you remove it and end the game
-			
 		}
-		// end of loop
-		
-		
-//		state();
-				
-//		System.out.println("Moves: " + moves);
-//		System.out.println("0");
+
 		return 0;
 	}
-	
-	
-	
-	// NOTE: movePileToFoundation HAS to be before movePileToPile since it's possible that a game will call movePileToPile when 
-	// it is moving a pile of cards from the middle of a stack for a card to go to foundation, so that card actually has to go to
-	// foundation
-	
 	
 	
 	public int strategyTwo(String seed) {
@@ -1561,7 +1527,6 @@ public class SolitaireTest {
 				
 				if (game.foundation()[0].size() == 13 && game.foundation()[1].size() == 13 && game.foundation()[2].size() == 13 && game.foundation()[3].size() == 13) {
 					System.out.println("You win");
-//					System.out.println("1");
 					return 1;
 				}
 				
@@ -1620,239 +1585,8 @@ public class SolitaireTest {
 			
 			System.out.println("No moves worked");
 			break;
-			
-			// TODO: you might have to try calling moveFoundationToPile if there are no new moved cards AND the old size is equal to the current size
-			// TODO: if you do this, you have to check that there is a new moved card OR the old size is different from the current size, otherwise you remove it and end the game
-			
 		}
-		// end of loop
+		
 		return 0;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public int strategyThree(String seed) {
-		
-		game = new Solitaire(seed);
-		
-		System.out.println("Initial:");
-		state();
-		
-		int moves = 0;
-		
-		String[] methods = {"movePileToFoundation()", "moveWasteToFoundation()", "movePileToPile()", 
-							"moveWasteToPile()", "movePileToFoundation()", "moveStockToWaste()" };
-		
-		boolean moved = false;
-		int oldStockSize = 0;
-		
-
-		while (1 + 1 == 2) {
-			
-			try {
-				game.moveWasteToPile();
-				System.out.println("Success calling moveWasteToPile()");
-				moved = true;
-				moves++;
-				System.out.println("Moves: " + moves);
-				state();
-				continue;
-			}
-			// the game didn't need the call
-			catch (Exception e) {
-				// if the call was not successful, it is expected to call an IllegalStateException
-				if (e instanceof IllegalStateException == true) {
-					System.out.println("Error calling moveWasteToPile()");
-				}
-				// if the call was not successful and does not throw an IllegalStateException, you have an error with the method
-				else {
-					System.out.println("General error in moveWasteToPile()\n");
-					state();
-					break;
-				}
-			}
-			
-			
-			
-			try {
-				game.movePileToFoundation();
-				System.out.println("Success calling movePileToFoundation()");
-				moved = true;
-				moves++;
-				System.out.println("Moves: " + moves);
-				state();
-				
-				if (game.foundation()[0].size() == 13 && game.foundation()[1].size() == 13 && game.foundation()[2].size() == 13 && game.foundation()[3].size() == 13) {
-					System.out.println("You win");
-//					System.out.println("1");
-					return 1;
-				}
-				
-				continue;
-			}
-			// the game didn't need the call
-			catch (Exception e) {
-				// if the call was not successful, it is expected to call an IllegalStateException
-				if (e instanceof IllegalStateException == true) {
-					System.out.println("Error calling movePileToFoundation()");
-				}
-				// if the call was not successful and does not throw an IllegalStateException, you have an error with the method
-				else {
-					System.out.println("General error in movePileToFoundation()\n");
-					state();
-					break;
-				}
-			}
-			
-			
-			try {
-				game.movePileToPile();
-				System.out.println("Success calling movePileToPile()");
-				moved = true;
-				moves++;
-				System.out.println("Moves: " + moves);
-				state();
-				continue;
-			}
-			// the game didn't need the call
-			catch (Exception e) {
-				// if the call was not successful, it is expected to call an IllegalStateException
-				if (e instanceof IllegalStateException == true) {
-					System.out.println("Error calling movePileToPile()");
-				}
-				// if the call was not successful and does not throw an IllegalStateException, you have an error with the method
-				else {
-					System.out.println("General error in movePileToPile()\n");
-					state();
-					break;
-				}
-			}
-			
-			
-			
-			
-			try {
-				game.moveWasteToFoundation();
-				System.out.println("Success calling moveWasteToFoundation()");
-				moved = true;
-				moves++;
-				System.out.println("Moves: " + moves);
-				state();
-				
-				if (game.foundation()[0].size() == 13 && game.foundation()[1].size() == 13 && game.foundation()[2].size() == 13 && game.foundation()[3].size() == 13) {
-					System.out.println("You win");
-//					System.out.println("1");
-					return 1;
-				}
-				
-				continue;
-			}
-			// the game didn't need the call
-			catch (Exception e) {
-				// if the call was not successful, it is expected to call an IllegalStateException
-				if (e instanceof IllegalStateException == true) {
-					System.out.println("Error calling moveWasteToFoundation()");
-				}
-				// if the call was not successful and does not throw an IllegalStateException, you have an error with the method
-				else {
-					System.out.println("General error in moveWasteToFoundation(\n)");
-					state();
-					break;
-				}
-			}			
-			
-			
-			
-			
-			
-			try {
-				game.moveStockToWaste();
-				System.out.println("Success calling moveStockToWaste()");
-				moves++;
-				System.out.println("Moves: " + moves);
-				state();
-				continue;
-			}
-			// the game didn't need the call
-			catch (Exception e) {
-				// if the call was not successful, it is expected to call an IllegalStateException
-				if (e instanceof IllegalStateException == true) {
-					System.out.println("Error calling moveStockToWaste()");
-				}
-				// if the call was not successful and does not throw an IllegalStateException, you have an error with the method
-				else {
-					System.out.println("General error in moveStockToWaste()\n");
-					state();
-					break;
-				}
-			}
-			
-			
-			
-			
-			// you only call this if the entire stock is empty
-			try {
-				game.moveWasteToStock();
-				System.out.println("Success calling moveWasteToStock()");
-				
-				if (!moved && oldStockSize == game.stock().size()) {
-					// you're probably repeating over and over, so you lose basically
-					System.out.println("\nNo moves left");
-					break;
-				}
-				moved = false;
-				oldStockSize = game.stock().size();
-				
-				moves++;
-				System.out.println("Moves: " + moves);
-				state();
-				continue;
-			}
-			// the game didn't need the call
-			catch (Exception e) {
-				// if the call was not successful, it is expected to call an IllegalStateException
-				if (e instanceof IllegalStateException == true) {
-					System.out.println("Error calling moveWasteToStock()");
-				}
-				// if the call was not successful and does not throw an IllegalStateException, you have an error with the method
-				else {
-					System.out.println("General error in moveWasteToStock()\n");
-					state();
-					break;
-				}
-			}
-
-			
-			
-			System.out.println("No moves worked");
-			break;
-			
-			// TODO: you might have to try calling moveFoundationToPile if there are no new moved cards AND the old size is equal to the current size
-			// TODO: if you do this, you have to check that there is a new moved card OR the old size is different from the current size, otherwise you remove it and end the game
-			
-		}
-		// end of loop
-		return 0;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

@@ -39,6 +39,17 @@ public class Deck {
 
         size = 52;
     }
+    
+    public Deck(Deck other) {
+    	this.deck = new Card[4][13];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 13; j++) {
+//                this.deck[i][j] = new Card(other.deck[i][j]); // Copy the Card object
+            	this.deck[i][j] = new Card(other.deck[i][j].getValue(), other.deck[i][j].getFace());
+            }
+        }
+        this.size = other.size;
+    }
 
     /** Outputs the 4 Suit array as a String */
     public String toString() {
@@ -147,6 +158,18 @@ public class Deck {
     	}
     	
     	return false;
+    }
+    
+    public Deck getShuffledCopy() {
+    	return new Deck(this);
+    }
+    
+    public Card getCard(int index) {
+    	
+    	int row = index / 13;
+    	int column = index % 13;
+    	
+    	return deck[row][column];
     }
     
 }

@@ -35,6 +35,8 @@ public class Solitaire {
     private static ArrayBasedStack<Card>[] foundation;
     private static ArrayBasedStack<Card>[] openTableau;
     private static ArrayBasedStack<Card>[] closedTableau;
+    
+    private Deck shuffledDeck;
 
 
     @SuppressWarnings("unchecked")
@@ -55,6 +57,8 @@ public class Solitaire {
         else {
         	deck.shuffle();
         }
+        
+        shuffledDeck = new Deck(deck);
         
         foundation = new ArrayBasedStack[4];
         for (int i = 0; i < 4; i++) {
@@ -672,5 +676,12 @@ public class Solitaire {
 
 		return 0;
 	}
+    
+    public String getCardFileName(int index) {
+    	String s = "cards/";
+    	s = s + shuffledDeck.getCard(index).fileName();
+    	s = s + ".gif";
+    	return s;
+    }
     
 }

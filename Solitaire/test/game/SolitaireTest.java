@@ -1589,4 +1589,52 @@ public class SolitaireTest {
 		
 		return 0;
 	}
+	
+	
+	
+	@Test
+	public void testGetCardFileName() {
+		state();
+		
+		// testing normal card
+		assertEquals("cards/h2.gif", game.getCardFileName(0));
+		
+		// testing value like Ace
+		assertEquals("cards/c1.gif", game.getCardFileName(2));
+		
+		// testing value like jack, queen, or king
+		assertEquals("cards/c12.gif", game.getCardFileName(6));
+		
+//		for (int i = 0; i < 52; i++) {
+//			System.out.println(game.getCardFileName(i));
+//		}
+		
+		/*
+		 * ORDER:
+		 * 1 openTableau
+		 * 
+		 * 1 closedTableau
+		 * 1 openTableau
+		 * 
+		 * 2 closedTableau
+		 * 1 openTableau
+		 * 
+		 * 3 closedTableau
+		 * 1 openTableau
+		 * 
+		 * 4 closedTableau
+		 * 1 openTableau
+		 * 
+		 * 5 closedTableau
+		 * 1 openTableau
+		 * 
+		 * 6 closedTableau
+		 * 1 openTableau
+		 * 
+		 * 24 stock
+		 */
+		
+		System.out.println("♠ ♣ ♥ ♦");
+		System.out.println("♡ ♢ ♤ ♧");
+	}
 }

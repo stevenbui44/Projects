@@ -113,5 +113,9 @@ public class Card {
         }
         return getValue();
     }
+    
+    public String fileName() {
+    	return getFace().toLowerCase() + updateValue();
+    }
 
 }
